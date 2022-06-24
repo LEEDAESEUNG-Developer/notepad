@@ -27,6 +27,13 @@ public interface NoteRepository {
     public List<NoteEntity> getNotes(NoteEntity note);
 
     /**
+     * 노트 타입을 변경한다
+     * Business, Social, Important
+     * @param note
+     */
+    public void updatetype(NoteEntity note);
+
+    /**
      * 노트를 삭제
      * @param note 노트 객체에 있는 노트번호를 가지고 삭제한다
      */

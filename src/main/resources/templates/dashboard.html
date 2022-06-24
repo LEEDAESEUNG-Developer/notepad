@@ -107,21 +107,20 @@
                                                     <div class="category-business"></div>
                                                     <div class="category-social"></div>
                                                     <div class="category-important"></div>
-                                                    <span class="more-options text-dark"><i
-                                                            class="icon-options-vertical"></i></span>
+                                                    <span class="more-options text-dark"> <i class="icon-options-vertical"></i> </span>
                                                 </div>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -158,15 +157,15 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -203,15 +202,15 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   href="javascript:void(0);">
+                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -234,7 +233,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content border-0">
                 <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title text-white">Add Notes</h5>
+                    <h5 class="modal-title text-white">노트 추가</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -244,10 +243,10 @@
                         <div class="notes-box">
                             <div class="notes-content">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>분류</label>
-                                            <select name="type">
+                                            <select name="type" class="custom-select">
                                                 <option value="10">Business</option>
                                                 <option value="20">Social</option>
                                                 <option value="30">Important</option>
@@ -255,7 +254,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
-                                            <label>노트 추가</label>
+                                            <label>노트 제목</label>
                                             <input type="text" id="note-has-title" class="form-control" name="title"
                                                    minlength="1" placeholder="Title"/>
                                         </div>
@@ -301,7 +300,8 @@ $(function() {
 
     function addLabelGroups() {
         $('.category-selector .badge-group-item').off('click').on('click', function (event) {
-            event.preventDefault();
+            // event.preventDefault();
+
             /* Act on the event */
             var getclass = this.className;                     // 엘리먼트 클래스 가져오기
             var getSplitclass = getclass.split(' ')[0];        // note-social, note-important, note-business

@@ -41,6 +41,20 @@ public class MemoryNoteRepositoryImpl implements NoteRepository {
     }
 
     @Override
+    public void updatetype(NoteEntity note) {
+        // 1. 노트아이디를 검색해서 메모를 가지고 온다.
+        // 2. 매개변수 note memberId와 검색한 메모 memberId와 비교
+        // 3. 일치할 경우 note 객체 프로퍼티를 넣어서 저장소에 값을 비교한다.
+        NoteEntity findNote = findNote(note);
+
+        if (note.getMemberID().equalsIgnoreCase(findNote.getMemberID())) {
+            repository.remove(note.getNoteId());
+            findNote.setType(note.getType());
+            repository.put(findNote.getNoteId(), findNote);
+        }
+    }
+
+    @Override
     public void deleteNote(NoteEntity note) {
         repository.remove(note.getNoteId());
     }

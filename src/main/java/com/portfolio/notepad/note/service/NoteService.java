@@ -27,6 +27,11 @@ public interface NoteService {
     public List<NoteEntity> getNotes(NoteEntity note);
 
     /**
+     * 메모 타입을 변경한다
+     */
+    public void updateype(NoteEntity note);
+
+    /**
      * 메모 삭제
      */
     public void deleteNote(NoteEntity note);

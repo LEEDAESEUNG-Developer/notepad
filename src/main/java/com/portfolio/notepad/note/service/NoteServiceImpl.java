@@ -29,6 +29,11 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public void updateype(NoteEntity note) {
+        noteRepository.updatetype(note);
+    }
+
+    @Override
     public void deleteNote(NoteEntity note) {
         noteRepository.deleteNote(note);
     }
