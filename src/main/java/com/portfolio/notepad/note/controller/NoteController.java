@@ -30,7 +30,6 @@ public class NoteController {
     @PostMapping("/noteAdd")
     public String noteAdd(@ModelAttribute NoteEntity note, HttpSession httpSession) {
         note.setMemberID((String) httpSession.getAttribute("memberId"));
-        note.setRegData(new Timestamp(System.currentTimeMillis()));
 
         log.info("/noteAdd -> note => {}", note);
         noteService.addNote(note);

@@ -13,7 +13,7 @@ create table member(
 );
 
 create table note(
-    noteId int not null,
+    noteId integer auto_increment primary key,
     memberId varchar(20),
     type int not null,
     title varchar(15) not null,

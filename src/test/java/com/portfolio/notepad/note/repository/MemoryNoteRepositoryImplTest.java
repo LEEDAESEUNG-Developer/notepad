@@ -21,21 +21,21 @@ class MemoryNoteRepositoryImplTest {
         noteEntity02.setMemberID("userA");
         noteEntity02.setTitle("제목: 테스트(userA)");
         noteEntity02.setDescription("내용: 테스트");
-        noteEntity02.setRegData(new Timestamp(System.currentTimeMillis()));
+        noteEntity02.setRegDate(new Timestamp(System.currentTimeMillis()));
 
         NoteEntity noteEntity03 = new NoteEntity();
         noteEntity03.setNoteId(3L);
         noteEntity03.setMemberID("userA");
         noteEntity03.setTitle("제목: 테스트(userA)");
         noteEntity03.setDescription("내용: 테스트");
-        noteEntity03.setRegData(new Timestamp(System.currentTimeMillis()));
+        noteEntity03.setRegDate(new Timestamp(System.currentTimeMillis()));
 
         NoteEntity noteEntity04 = new NoteEntity();
         noteEntity04.setNoteId(4L);
         noteEntity04.setMemberID("userB");
         noteEntity04.setTitle("제목: 테스트(userB)");
         noteEntity04.setDescription("내용: 테스트");
-        noteEntity04.setRegData(new Timestamp(System.currentTimeMillis()));
+        noteEntity04.setRegDate(new Timestamp(System.currentTimeMillis()));
 
         memoryNoteRepository.addNote(noteEntity02);
         memoryNoteRepository.addNote(noteEntity03);
@@ -56,7 +56,7 @@ class MemoryNoteRepositoryImplTest {
         noteEntity.setMemberID("userA");
         noteEntity.setTitle("제목: 테스트");
         noteEntity.setDescription("내용: 테스트");
-        noteEntity.setRegData(new Timestamp(System.currentTimeMillis()));
+        noteEntity.setRegDate(new Timestamp(System.currentTimeMillis()));
 
         // when
         memoryNoteRepository.addNote(noteEntity);

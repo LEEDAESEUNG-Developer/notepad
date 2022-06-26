@@ -91,7 +91,7 @@
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.regData, 'yy/MM/dd HH:mm:ss')}"></p>
+                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
@@ -135,7 +135,7 @@
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.regData, 'yy/MM/dd HH:mm:ss')}"></p>
+                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
@@ -180,7 +180,7 @@
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.regData, 'yy/MM/dd HH:mm:ss')}"></p>
+                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>

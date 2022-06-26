@@ -12,7 +12,7 @@ import java.util.List;
 @Primary
 @Repository
 @RequiredArgsConstructor
-public class DatabaseMemberRepsotioryImpl implements MemberRepository {
+public class databaseMemberRepositoryImpl implements MemberRepository {
 
     private final MemberMapper memberMapper;
 
@@ -27,9 +27,9 @@ public class DatabaseMemberRepsotioryImpl implements MemberRepository {
     }
 
     @Override
-    public boolean isMember(MemberEntity member) { // LOGIN METHOD
+    public boolean isMember(MemberEntity member) {
         log.info("isMember 함수 실행");
-        MemberEntity findMember = memberMapper.login(member);
+        MemberEntity findMember = memberMapper.isMember(member);
         log.info("findMember = {} ", findMember);
 
         return findMember != null;
@@ -37,6 +37,6 @@ public class DatabaseMemberRepsotioryImpl implements MemberRepository {
 
     @Override
     public void addMember(MemberEntity member) {
-
+        memberMapper.addMember(member);
     }
 }

@@ -11,5 +11,5 @@ public class NoteEntity {
     private int type;           // 10: Business, 20: Social, 30: Important
     private String title;       // 제목
     private String description; // 내용
-    private Timestamp regData;  // 생성일
+    private Timestamp regDate;  // 생성일
 }

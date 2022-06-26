@@ -3,6 +3,7 @@ package com.portfolio.notepad.note.repository;
 import com.portfolio.notepad.note.NoteEntity;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ public class MemoryNoteRepositoryImpl implements NoteRepository {
     @Override
     public void addNote(NoteEntity note) {
         note.setNoteId(seq++);
+        note.setRegDate(new Timestamp(System.currentTimeMillis()));
         repository.put(note.getNoteId(), note);
     }
 
