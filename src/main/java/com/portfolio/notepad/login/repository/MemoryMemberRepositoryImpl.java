@@ -51,4 +51,12 @@ public class MemoryMemberRepositoryImpl implements MemberRepository {
         repository.put(member.getId(), member);
     }
 
+    @Override
+    public int changeMemberPwd(MemberEntity member) {
+        return 0;
+    }
+
+    @Override
+    public void deleteMember(MemberEntity member) {
+    }
 }

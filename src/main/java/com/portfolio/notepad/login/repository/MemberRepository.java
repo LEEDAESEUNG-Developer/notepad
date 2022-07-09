@@ -5,6 +5,9 @@ import java.util.List;
 
 public interface MemberRepository {
 
+    // 회원 가입
+    public void addMember(MemberEntity member);
+
     // 회원 정보 가지고 오기
     public MemberEntity findMember(MemberEntity member);
 
@@ -17,6 +20,9 @@ public interface MemberRepository {
      */
     public boolean isMember(MemberEntity member);
 
-    public void addMember(MemberEntity member);
+    // 회원 비밀번호 변경
+    public int changeMemberPwd(MemberEntity member);
 
+    // 회원 탈퇴
+    public void deleteMember(MemberEntity member);
 }

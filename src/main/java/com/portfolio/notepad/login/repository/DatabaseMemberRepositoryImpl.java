@@ -12,9 +12,14 @@ import java.util.List;
 @Primary
 @Repository
 @RequiredArgsConstructor
-public class databaseMemberRepositoryImpl implements MemberRepository {
+public class DatabaseMemberRepositoryImpl implements MemberRepository {
 
     private final MemberMapper memberMapper;
+
+    @Override
+    public void addMember(MemberEntity member) {
+        memberMapper.addMember(member);
+    }
 
     @Override
     public MemberEntity findMember(MemberEntity member) {
@@ -36,7 +41,13 @@ public class databaseMemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public void addMember(MemberEntity member) {
-        memberMapper.addMember(member);
+    public int changeMemberPwd(MemberEntity member) {
+        return memberMapper.changePwdMember(member);
+    }
+
+    @Override
+    public void deleteMember(MemberEntity member) {
+        memberMapper.deleteNote(member);
+        memberMapper.deleteMember(member);
     }
 }

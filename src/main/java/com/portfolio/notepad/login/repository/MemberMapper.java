@@ -31,6 +31,15 @@ public interface MemberMapper {
     List<MemberEntity> getMemberAll();
 
 
-    // 탈퇴 기능
+    // 비밀번호 변경
+    @Update("update member set memberPwd = #{member.pwd} where memberId = #{member.id}")
+    int changePwdMember(@Param("member") MemberEntity member);
 
+    // 회원 삭제
+    @Delete("delete from member where memberId = #{member.id}")
+    int deleteMember(@Param("member") MemberEntity member);
+
+    // 회원 게시판 삭제
+    @Delete("delete from note where memberId = #{member.id}")
+    int deleteNote(@Param("member") MemberEntity member);
 }

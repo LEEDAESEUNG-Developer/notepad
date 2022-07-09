@@ -19,6 +19,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    @PostMapping("/register")
+    public String register(@ModelAttribute MemberEntity memberEntity) {
+        memberService.register(memberEntity);
+        return "redirect:index.html";
+    }
+
     @RequestMapping("/login")
     public String login(@ModelAttribute MemberEntity member, HttpSession httpSession) {
         if (memberService.isLogin(member)) {
@@ -27,18 +33,6 @@ public class MemberController {
         } else {
             return "redirect:index.html";
         }
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.invalidate();
-        return "redirect:index.html";
-    }
-
-    @PostMapping("/register")
-    public String register(@ModelAttribute MemberEntity memberEntity) {
-        memberService.register(memberEntity);
-        return "redirect:index.html";
     }
 
     /**
@@ -67,9 +61,37 @@ public class MemberController {
         return new Gson().toJson(jsonObject);
     }
 
-    @PostMapping("/delete")
-    public String delete(@ModelAttribute MemberEntity member) {
+    @PostMapping("/change/password")
+    public String passwordChange(HttpSession httpSession, @ModelAttribute MemberEntity member){
+        String memberId = (String) httpSession.getAttribute("memberId");
+        
+        if(memberId == null) return login(member, httpSession); // 회원 없는 사람이 비밀번호 변경 방지
 
-        return "";
+        member.setId(memberId);
+        memberService.changeMemberPwd(member);
+        
+        return "redirect:/notes";
     }
+
+    @PostMapping("/delete")
+    public String delete(HttpSession httpSession, @ModelAttribute MemberEntity member) {
+        String memberId = (String) httpSession.getAttribute("memberId");
+
+        if(memberId == null) return login(member, httpSession); // 회원 없는 사람이 비밀번호 변경 방지
+
+        member.setId(memberId);
+        memberService.deleteMember(member);
+
+        return "redirect:/index.html";
+    }
+
+
+
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:index.html";
+    }
+
+
 }

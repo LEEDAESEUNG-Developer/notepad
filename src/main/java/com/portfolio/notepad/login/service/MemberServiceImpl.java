@@ -14,17 +14,28 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public boolean isLogin(MemberEntity member) {
-        return memberRepository.isMember(member);
-    }
-
-    @Override
     public void register(MemberEntity member) {
         memberRepository.addMember(member);
     }
 
     @Override
+    public boolean isLogin(MemberEntity member) {
+        return memberRepository.isMember(member);
+    }
+
+    @Override
     public MemberEntity findMember(MemberEntity member) {
         return memberRepository.findMember(member);
+    }
+
+    @Override
+    public int changeMemberPwd(MemberEntity member) {
+        return memberRepository.changeMemberPwd(member);
+    }
+
+    @Override
+    public int deleteMember(MemberEntity member) {
+        memberRepository.deleteMember(member);
+        return 1;
     }
 }
