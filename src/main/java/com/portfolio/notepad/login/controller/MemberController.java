@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/member")
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -22,16 +22,16 @@ public class MemberController {
     @PostMapping("/register")
     public String register(@ModelAttribute MemberEntity memberEntity) {
         memberService.register(memberEntity);
-        return "redirect:index.html";
+        return "redirect:/index.html";
     }
 
     @RequestMapping("/login")
     public String login(@ModelAttribute MemberEntity member, HttpSession httpSession) {
         if (memberService.isLogin(member)) {
             httpSession.setAttribute("memberId", member.getId());
-            return "redirect:notes";
+            return "redirect:/notes";
         } else {
-            return "redirect:index.html";
+            return "redirect:/index.html";
         }
     }
 
@@ -85,12 +85,10 @@ public class MemberController {
         return "redirect:/index.html";
     }
 
-
-
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
         httpSession.invalidate();
-        return "redirect:index.html";
+        return "redirect:/index.html";
     }
 
 

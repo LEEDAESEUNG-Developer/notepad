@@ -187,8 +187,6 @@
                     </th:block>
                 </th:block>
             </th:block>
-
-
         </div>
     </div>
 
@@ -258,6 +256,7 @@
                     </button>
                 </div>
                 <div>
+                    <a href="/member/logout"><button id="member_info_menu_logout_btn" class="btn btn-outline-primary col-sm-12 mt-5">로그아웃</button></a>
                     <button id="member_info_menu_pwd_change_btn" class="btn btn-outline-primary col-sm-12 mt-5 mb-5">비밀번호 변경</button>
                     <button id="member_info_menu_delete_btn" class="btn btn-outline-primary col-sm-12 mb-5">회원 탈퇴</button>
                 </div>
@@ -272,7 +271,7 @@
                 <div class="modal-header bg-info text-white">
                     <h5 class="modal-title text-white">회원 정보 변경</h5>
                 </div>
-                <form action="/change/password" method="post" id="member-change-Form"> <!-- /member/change-->
+                <form action="/member/change/password" method="post" id="member-change-Form"> <!-- /member/change-->
                     <div class="modal-body">
                         <div class="notes-box">
                             <div class="notes-content">
@@ -324,7 +323,7 @@
                 <div class="modal-header bg-info text-white">
                     <h5 class="modal-title text-white">회원 탈퇴</h5>
                 </div>
-                <form action="/delete" method="post" id="member-delete-form"> <!-- /member-change-->
+                <form action="/member/delete" method="post" id="member-delete-form"> <!-- /member-change-->
                     <div class="modal-body">
                         <div class="notes-box">
                             <div class="notes-content">
@@ -524,7 +523,7 @@ $(function() {
     //회원탈퇴 -> 비밀번호 체크
     $("#deleteForm_delete_pwd").keyup(function () {
         $.ajax({
-            url:"/findPassword",
+            url:"/member/findPassword",
             type:"post",
             data: JSON.stringify({
                 "id" : [[${session.memberId}]],

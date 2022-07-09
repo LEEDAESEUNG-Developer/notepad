@@ -42,7 +42,7 @@ public class NoteController {
      */
     @GetMapping("/notes")
     public String notes(HttpSession httpSession, Model model) {
-        if (httpSession.getAttribute("memberId") == null) return "redirect:/login";
+        if (httpSession.getAttribute("memberId") == null) return "redirect:/member/login";
 
         String memberId = (String) httpSession.getAttribute("memberId");
         NoteEntity noteEntity = new NoteEntity();
