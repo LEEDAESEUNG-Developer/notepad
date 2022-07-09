@@ -10,4 +10,6 @@ public interface MemberService {
 
     public void register(MemberEntity member);
 
+    public MemberEntity findMember(MemberEntity member);
+
 }

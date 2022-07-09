@@ -10,16 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/stylesheet/dashboard.css">
-    <style>
-        /* .help-block 을 일단 보이지 않게 설정 */
-        #member-change-Form .help-block{
-            display: none;
-        }
-        /* glyphicon 을 일단 보이지 않게 설정 */
-        #member-change-Form .glyphicon{
-            display: none;
-        }
-    </style>
 </head>
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -50,7 +40,7 @@
         </li>
         <li class="nav-item ml-auto">
             <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3"
-               id="member-info-btn"> <i class="icon-note m-1"></i><span class="d-none d-md-block font-14">회원표시</span></a>
+               id="member-info-btn"> <i class="icon-note m-1"></i><span class="d-none d-md-block font-14">개인정보 설정</span></a>
         </li>
         <li class="nav-item ml-auto">
             <a href="javascript:void(0)" class="nav-link btn-primary rounded-pill d-flex align-items-center px-3"
@@ -257,17 +247,32 @@
         </div>
     </div>
 
-    <div class="modal fade" id="member-change" tabindex="-1" role="dialog" aria-labelledby="addnotesmodalTitle"
-         style="display: none;" aria-hidden="true">
+    <!-- 개인정보 선택 메뉴 -->
+    <div class="modal fade" id="member-menu" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content border-0">
                 <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title text-white">회원 정보 변경</h5>
+                    <h5 class="modal-title text-white">개인정보 메뉴</h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="/member/change" method="post" id="member-change-Form"> <!-- /member-change-->
+                <div>
+                    <button id="member_info_menu_pwd_change_btn" class="btn btn-outline-primary col-sm-12 mt-5 mb-5">비밀번호 변경</button>
+                    <button id="member_info_menu_delete_btn" class="btn btn-outline-primary col-sm-12 mb-5">회원 탈퇴</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회원 정보 변경 모델 -->
+    <div class="modal fade" id="member-change" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title text-white">회원 정보 변경</h5>
+                </div>
+                <form action="/member/change" method="post" id="member-change-Form"> <!-- /member/change-->
                     <div class="modal-body">
                         <div class="notes-box">
                             <div class="notes-content">
@@ -275,7 +280,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>회원 아이디</label>
-                                            <input class="form-control" th:value="${session.memberId}" readonly/>
+                                            <input class="form-control" th:value="${session.memberId}" value="아이디" readonly/>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -305,7 +310,55 @@
                             </button>
                             <button type="reset" id="cancel_btn" class="btn btn-secondary" data-dismiss="modal">취소</button>
                             <button type="button" id="change_btn" class="btn btn-success">변경</button>
-                            <button type="submit" id="delete_btn" class="btn btn-warning">탈퇴</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회원 탈퇴 모델 -->
+    <div class="modal fade" id="member-delete" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title text-white">회원 탈퇴</h5>
+                </div>
+                <form action="/member/delete" method="post" id="member-delete-form"> <!-- /member-change-->
+                    <div class="modal-body">
+                        <div class="notes-box">
+                            <div class="notes-content">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="note-title">
+                                            <label>회원 아이디</label>
+                                            <input class="form-control" id="memberID" th:value="${session.memberId}"
+                                                   value="아이디" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="note-title form-group has-feedback">
+                                            <label>비밀번호</label>
+                                            <input type="password" id="deleteForm_delete_pwd" name="pwd"
+                                                   class="form-control is-invalid"
+                                                   placeholder="비밀번호">
+                                            <span class="invalid-feedback">비밀번호가 일치하지 않습니다.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p>
+                                            회원탈퇴 시 메모, 계정이 삭제됩니다. <br>
+                                            복구는 불가능합니다.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" id="deleteForm_cancel_btn" class="btn btn-secondary"
+                                        data-dismiss="modal">취소
+                                </button>
+                                <button type="button" id="deleteForm_delete_btn" class="btn btn-warning">탈퇴</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -313,7 +366,7 @@
         </div>
     </div>
 </div>
-<script>
+<script th:inline="javascript">
 $(function() {
     function removeNote() {
         $(".remove-note").off('click').on('click', function(event) {
@@ -376,11 +429,20 @@ $(function() {
         $('#btn-n-add').show();
     })
 
+    // 개인정보 설정 버튼
     $('#member-info-btn').on('click', function(event) {
+        $('#member-menu').modal('show');
+    });
+
+    // 개인정보 메뉴 -> 비밀번호 변경 버튼
+    $("#member_info_menu_pwd_change_btn").click(function () {
         $('#member-change').modal('show');
-        $('#btn-n-save').hide();
-        $('#btn-n-add').show();
-    })
+    });
+
+    // 개인정보 메뉴 -> 회원탈퇴 버튼
+    $("#member_info_menu_delete_btn").click(function () {
+        $('#member-delete').modal('show');
+    });
 
     $('#addnotesmodal').on('hidden.bs.modal', function (event) {
         event.preventDefault();
@@ -397,12 +459,14 @@ $(function() {
     let minPwd = 4;
 
     // 비밀번호 에러 표시
-    $("#pwd").keyup(function (){
-        if(this.value.length >= minPwd){
+    $("#pwd").keyup(function () {
+        if (this.value.length >= minPwd) {
             valid(this);
         } else {
             invalid(this);
         }
+    }).change(function () {
+        console.log("비밀번호 ");
     });
 
     // 비밀번호 체크
@@ -438,6 +502,47 @@ $(function() {
         } else {
             alert('비밀번호 변경 실패하였습니다.');
         }
+    });
+
+    // 회원탈퇴 -> 취소 버튼
+    $("#deleteForm_cancel_btn").click(function () {
+        $("#deleteForm_delete_pwd").val('');
+    });
+
+    // 회원탈퇴 -> 탈퇴 버튼
+    $("#deleteForm_delete_btn").click(function () {
+        let pwd = $("#deleteForm_delete_pwd");
+
+        if(pwd.hasClass("is-valid")){
+            $("#deleteForm_delete_btn").attr("type", "submit");
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
+            $("#deleteForm_delete_btn").attr("type", "button");
+        }
+    });
+
+    //회원탈퇴 -> 비밀번호 체크
+    $("#deleteForm_delete_pwd").keyup(function () {
+        $.ajax({
+            url:"/findPassword",
+            type:"post",
+            data: JSON.stringify({
+                "id" : [[${session.memberId}]],
+                "pwd": $("#deleteForm_delete_pwd").val()
+            }),
+            contentType: 'application/json',
+            dataType: "json",
+            success:function(data) {
+                if (data.status === "ok") {
+                    valid($("#deleteForm_delete_pwd"));
+                } else {
+                    invalid($("#deleteForm_delete_pwd"));
+                }
+            },
+            error: function (data) {
+                console.log("연결 실패", data);
+            },
+        });
     });
  });
 

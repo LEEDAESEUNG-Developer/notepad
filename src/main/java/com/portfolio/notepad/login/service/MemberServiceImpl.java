@@ -22,4 +22,9 @@ public class MemberServiceImpl implements MemberService {
     public void register(MemberEntity member) {
         memberRepository.addMember(member);
     }
+
+    @Override
+    public MemberEntity findMember(MemberEntity member) {
+        return memberRepository.findMember(member);
+    }
 }

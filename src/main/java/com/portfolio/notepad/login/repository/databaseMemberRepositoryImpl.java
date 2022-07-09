@@ -18,7 +18,7 @@ public class databaseMemberRepositoryImpl implements MemberRepository {
 
     @Override
     public MemberEntity findMember(MemberEntity member) {
-        return null;
+        return memberMapper.findMember(member);
     }
 
     @Override
