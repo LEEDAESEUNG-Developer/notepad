@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatabaseMemberRepositoryImpl implements MemberRepository {
 
-    private final MemberMapper memberMapper;
+    private final MemberMybatisMapper memberMapper;
 
     @Override
     public void addMember(MemberEntity member) {

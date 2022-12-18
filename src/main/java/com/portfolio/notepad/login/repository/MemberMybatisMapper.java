@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface MemberMapper {
+public interface MemberMybatisMapper {
 
     // 회원가입
     @Insert("insert into member(memberId, memberPwd) values(#{member.id}, #{member.pwd})")
