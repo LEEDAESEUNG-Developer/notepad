@@ -1,9 +1,9 @@
-package com.portfolio.notepad.login.controller;
+package com.portfolio.notepad.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.portfolio.notepad.login.MemberEntity;
-import com.portfolio.notepad.login.service.MemberService;
+import com.portfolio.notepad.domain.MemberEntity;
+import com.portfolio.notepad.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

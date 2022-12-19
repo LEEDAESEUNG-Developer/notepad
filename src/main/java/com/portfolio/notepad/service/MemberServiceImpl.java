@@ -1,7 +1,7 @@
-package com.portfolio.notepad.login.service;
+package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.login.MemberEntity;
-import com.portfolio.notepad.login.repository.MemberRepository;
+import com.portfolio.notepad.domain.MemberEntity;
+import com.portfolio.notepad.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

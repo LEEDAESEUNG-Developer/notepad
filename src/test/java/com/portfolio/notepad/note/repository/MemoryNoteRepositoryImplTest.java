@@ -1,6 +1,7 @@
 package com.portfolio.notepad.note.repository;
 
-import com.portfolio.notepad.note.NoteEntity;
+import com.portfolio.notepad.domain.NoteEntity;
+import com.portfolio.notepad.repository.MemoryNoteRepositoryImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

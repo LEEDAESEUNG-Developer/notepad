@@ -1,6 +1,7 @@
 package com.portfolio.notepad.login.repository;
 
-import com.portfolio.notepad.login.MemberEntity;
+import com.portfolio.notepad.domain.MemberEntity;
+import com.portfolio.notepad.repository.MemoryMemberRepositoryImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

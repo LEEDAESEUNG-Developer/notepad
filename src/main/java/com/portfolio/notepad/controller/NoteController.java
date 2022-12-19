@@ -1,7 +1,7 @@
-package com.portfolio.notepad.note.controller;
+package com.portfolio.notepad.controller;
 
-import com.portfolio.notepad.note.NoteEntity;
-import com.portfolio.notepad.note.service.NoteService;
+import com.portfolio.notepad.domain.NoteEntity;
+import com.portfolio.notepad.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Slf4j

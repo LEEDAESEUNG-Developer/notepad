@@ -1,9 +1,7 @@
-package com.portfolio.notepad.note.service;
+package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.login.MemberEntity;
-import com.portfolio.notepad.note.NoteEntity;
+import com.portfolio.notepad.domain.NoteEntity;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface NoteService {

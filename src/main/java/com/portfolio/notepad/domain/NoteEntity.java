@@ -1,4 +1,4 @@
-package com.portfolio.notepad.note;
+package com.portfolio.notepad.domain;
 
 import lombok.Data;
 

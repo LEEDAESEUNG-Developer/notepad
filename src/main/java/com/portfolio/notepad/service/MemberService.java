@@ -1,8 +1,6 @@
-package com.portfolio.notepad.login.service;
+package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.login.MemberEntity;
-
-import java.util.List;
+import com.portfolio.notepad.domain.MemberEntity;
 
 public interface MemberService {
 

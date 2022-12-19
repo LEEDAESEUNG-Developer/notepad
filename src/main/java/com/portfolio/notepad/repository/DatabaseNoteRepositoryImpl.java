@@ -1,6 +1,6 @@
-package com.portfolio.notepad.note.repository;
+package com.portfolio.notepad.repository;
 
-import com.portfolio.notepad.note.NoteEntity;
+import com.portfolio.notepad.domain.NoteEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;

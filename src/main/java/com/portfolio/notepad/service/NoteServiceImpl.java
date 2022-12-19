@@ -1,7 +1,7 @@
-package com.portfolio.notepad.note.service;
+package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.note.NoteEntity;
-import com.portfolio.notepad.note.repository.NoteRepository;
+import com.portfolio.notepad.domain.NoteEntity;
+import com.portfolio.notepad.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.portfolio.notepad.login.repository;
+package com.portfolio.notepad.repository;
 
-import com.portfolio.notepad.login.MemberEntity;
+import com.portfolio.notepad.domain.MemberEntity;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
