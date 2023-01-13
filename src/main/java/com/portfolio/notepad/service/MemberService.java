@@ -1,21 +1,28 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.domain.MemberEntity;
+import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.form.MemberCreateForm;
+import com.portfolio.notepad.entity.Member;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional(readOnly = true)
 public interface MemberService {
 
     // 회원가입
-    public void register(MemberEntity member);
+    @Transactional
+    public Member register(MemberCreateForm form);
 
-    // 로그인 확인
-    public boolean isLogin(MemberEntity member);
+    // 로그인
+    public Member login(String id, String pwd);
 
     // 회원 찾기
-    public MemberEntity findMember(MemberEntity member);
+    public Member findMember(String id);
 
     // 회원 비밀번호 변경
-    public int changeMemberPwd(MemberEntity member);
+    @Transactional
+    public void changeMemberPwd(MemberPwdChangeForm form);
 
     // 회원 탈퇴
-    public int deleteMember(MemberEntity member);
+    @Transactional
+    public void deleteMember(Long memberId);
 }

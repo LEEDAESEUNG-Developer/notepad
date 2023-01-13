@@ -1,16 +1,17 @@
 package com.portfolio.notepad.controller;
 
-import com.portfolio.notepad.domain.NoteEntity;
+import com.portfolio.notepad.controller.form.NoteCreateForm;
+import com.portfolio.notepad.controller.form.NoteUpdateForm;
+import com.portfolio.notepad.entity.Member;
+import com.portfolio.notepad.entity.MemoType;
+import com.portfolio.notepad.entity.Note;
 import com.portfolio.notepad.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Slf4j
@@ -24,14 +25,13 @@ public class NoteController {
 
     /**
      * 게시판 생성
-     * @param note 노트객체
+     * @param form 노트객체
      */
     @PostMapping("/noteAdd")
-    public String noteAdd(@ModelAttribute NoteEntity note, HttpSession httpSession) {
-        note.setMemberID((String) httpSession.getAttribute("memberId"));
-
-        log.info("/noteAdd -> note => {}", note);
-        noteService.addNote(note);
+    public String noteAdd(@ModelAttribute NoteCreateForm form, @SessionAttribute("member") Member member) {
+        form.setMemberId(member.getId()); // 바꺼보는걸로
+        log.debug("/noteAdd -> note => {}", form);
+        noteService.addNote(form);
 
         return "redirect:notes";
     }
@@ -40,43 +40,41 @@ public class NoteController {
      * 회원 메모들을 가지고 오기
      */
     @GetMapping("/notes")
-    public String notes(HttpSession httpSession, Model model) {
-        if (httpSession.getAttribute("memberId") == null) return "redirect:/member/login";
+    public String notes(@SessionAttribute(name = "member", required = false) Member member, Model model) {
+        if (member == null) return "redirect:/";
 
-        String memberId = (String) httpSession.getAttribute("memberId");
-        NoteEntity noteEntity = new NoteEntity();
-        noteEntity.setMemberID(memberId);
+        Long memberId = member.getId();
 
-        List<NoteEntity> notes = noteService.getNotes(noteEntity);
+        List<Note> notes = noteService.getNotes(memberId);
 
-        log.info("/notes -> notes => {}", notes);
-
+        model.addAttribute("noteCreateForm", new NoteCreateForm());
         model.addAttribute("notes", notes);
         return "dashboard";
     }
 
     /**
      * 회원이 메모 Business, Social, Important 클릭했을 때 바꾸기
-     * @param note 노트객체
+     *
+     * @param noteId 노트객체
+     * @param type
      */
     @GetMapping(value = "/typeupdate", params = {"noteId", "type"})
-    public String typeupdate(@ModelAttribute NoteEntity note, HttpSession httpSession) {
-        String memberId = (String) httpSession.getAttribute("memberId");
-        note.setMemberID(memberId);
-        log.info("/typeupdate -> note = {}", note);
-        noteService.updateype(note);
+    public String typeupdate(@RequestParam("noteId") Long noteId, @RequestParam String type, @SessionAttribute("member") Member member) {
+        Note findNote = noteService.getNote(noteId);
+        NoteUpdateForm form = new NoteUpdateForm(MemoType.valueOf(type), findNote.getTitle(), findNote.getDescription());
+        noteService.editNote(noteId, form);
         return "redirect:notes";
     }
 
     /**
      * 메모 아이디를 가지고 삭제
-     * @param note 메모객체(메모 아이디)
+     * @param noteId 메모객체(메모 아이디)
      */
     @GetMapping(value = "/deleteNote", params = "noteId")
-    public String deleteNote(@ModelAttribute NoteEntity note, HttpSession httpSession) {
-        String memberId = (String) httpSession.getAttribute("memberId");
-        note.setMemberID(memberId);
-        noteService.deleteNote(note);
+    public String deleteNote(@RequestParam Long noteId, @SessionAttribute("member") Member member) {
+        if(member == null ) return "redirect:/";
+
+        noteService.deleteNote(noteId);
 
         return "redirect:notes";
     }
