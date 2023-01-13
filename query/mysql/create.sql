@@ -1,8 +1,8 @@
 show databases ;
 
-create database aLong;
+create database note;
 
-use aLong;
+use note;
 
 show tables;
 
@@ -12,7 +12,7 @@ create table member(
     memberPwd varchar(20) not null
 );
 
-create table aLong(
+create table note(
     noteId integer auto_increment primary key,
     memberId varchar(20),
     type int not null,
@@ -24,5 +24,5 @@ create table aLong(
 );
 
 select * from member;
-select * from aLong;
+select * from note;
 
