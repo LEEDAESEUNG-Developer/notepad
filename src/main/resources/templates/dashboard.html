@@ -6,9 +6,9 @@
     <!--  All snippets are MIT license http://bootdey.com/license -->
     <title>notes dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/stylesheet/dashboard.css">
 </head>
 <body>
@@ -50,19 +50,19 @@
     <div class="tab-content bg-transparent">
         <div id="note-full-container" class="note-has-grid row"> <!-- 모든 메모장-->
             <th:block th:each="note : ${notes}">
-                <th:block th:switch="${note.type}">
-                    <th:block th:case="10">
+                <th:block th:switch="${note.memoType}">
+                    <th:block th:case="${note.memoType.BUSINESS}">
                         <div class="col-md-4 single-note-item all-category note-business">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
+<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.noteId})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -77,15 +77,15 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'BUSINESS'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'SOCIAL'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'IMPORTANT'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -95,18 +95,18 @@
                             </div>
                         </div>
                     </th:block>
-                    <th:block th:case="20">
+                    <th:block th:case="${note.memoType.IMPORTANT}">
                         <div class="col-md-4 single-note-item all-category note-social">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
+<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.noteId})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -122,15 +122,15 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'BUSINESS'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'SOCIAL'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'IMPORTANT'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -140,18 +140,18 @@
                             </div>
                         </div>
                     </th:block>
-                    <th:block th:case="30">
+                    <th:block th:case="${note.memoType.SOCIAL}">
                         <div class="col-md-4 single-note-item all-category note-important">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
                                 <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>
+<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.noteId})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -167,15 +167,15 @@
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
                                                 <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${10})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'BUSINESS'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
                                                 </a>
                                                 <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${20})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'SOCIAL'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
                                                 </a>
                                                 <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger"
-                                                   th:href="@{/typeupdate(noteId = ${note.noteId}, type = ${30})}">
+                                                   th:href="@{/typeupdate(noteId = ${note.id}, type = ${'IMPORTANT'})}">
                                                     <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
                                                 </a>
                                             </div>
@@ -201,7 +201,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="/noteAdd" method="post" id="addnotesmodalTitle">
+                <form action="/noteAdd" method="post" id="addnotesmodalTitle" th:object="${noteCreateForm}">
                     <div class="modal-body">
                         <div class="notes-box">
                             <div class="notes-content">
@@ -209,11 +209,13 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>분류</label>
-                                            <select name="type" class="custom-select">
-                                                <option value="10">Business</option>
-                                                <option value="20">Social</option>
-                                                <option value="30">Important</option>
-                                            </select></div>
+                                            <select th:field="*{memoType}" class="custom-select">
+                                                <option th:each="type : ${T(com.portfolio.notepad.entity.MemoType).values()}"
+                                                        th:value="${type.name()}"
+                                                        th:text="${type.name()}">
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
@@ -237,7 +239,7 @@
                     <div class="modal-footer">
                         <button id="btn-n-save" class="float-left btn btn-success" style="display: none;">Save</button>
                         <button class="btn btn-danger" data-dismiss="modal">취소</button>
-<!--                        <button id="btn-n-add" class="btn btn-info" disabled="disabled">저장</button>-->
+                        <!--                        <button id="btn-n-add" class="btn btn-info" disabled="disabled">저장</button>-->
                         <input type="submit" class="btn btn-info" value="저장">
                     </div>
                 </form>
@@ -279,7 +281,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>회원 아이디</label>
-                                            <input class="form-control" th:value="${session.memberId}" value="아이디" readonly/>
+                                            <input class="form-control" th:value="${session.member.loginId}" value="아이디" readonly/>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -331,7 +333,7 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>회원 아이디</label>
-                                            <input class="form-control" id="memberID" th:value="${session.memberId}"
+                                            <input class="form-control" id="memberID" th:value="${session.member.loginId}"
                                                    value="아이디" readonly/>
                                         </div>
                                     </div>
@@ -366,207 +368,207 @@
     </div>
 </div>
 <script th:inline="javascript">
-$(function() {
-    function removeNote() {
-        $(".remove-note").off('click').on('click', function(event) {
-          event.stopPropagation();
-          $(this).parents('.single-note-item').remove();
+    $(function() {
+        function removeNote() {
+            $(".remove-note").off('click').on('click', function(event) {
+                event.stopPropagation();
+                $(this).parents('.single-note-item').remove();
+            })
+        }
+
+        function favouriteNote() {
+            $(".favourite-note").off('click').on('click', function (event) {
+                event.stopPropagation();
+                $(this).parents('.single-note-item').toggleClass('note-favourite');
+            });
+        }
+
+        function addLabelGroups() {
+            $('.category-selector .badge-group-item').off('click').on('click', function (event) {
+                // event.preventDefault();
+
+                /* Act on the event */
+                var getclass = this.className;                     // 엘리먼트 클래스 가져오기
+                var getSplitclass = getclass.split(' ')[0];        // note-social, note-important, note-business
+                console.log("getSplitclass = " + getSplitclass);
+
+                if ($(this).hasClass('badge-business')) {
+                    $(this).parents('.single-note-item').removeClass('note-social');
+                    $(this).parents('.single-note-item').removeClass('note-important');
+                    $(this).parents('.single-note-item').toggleClass(getSplitclass);
+                } else if ($(this).hasClass('badge-social')) {
+                    $(this).parents('.single-note-item').removeClass('note-business');
+                    $(this).parents('.single-note-item').removeClass('note-important');
+                    $(this).parents('.single-note-item').toggleClass(getSplitclass);
+                } else if ($(this).hasClass('badge-important')) {
+                    console.log("getSplitclass => ", getSplitclass);
+                    $(this).parents('.single-note-item').removeClass('note-social');
+                    $(this).parents('.single-note-item').removeClass('note-business');
+                    $(this).parents('.single-note-item').toggleClass(getSplitclass);
+                }
+            });
+        }
+
+        var $btns = $('.note-link').click(function() {
+            if (this.id == 'all-category') {
+                var $el = $('.' + this.id).fadeIn();
+                $('#note-full-container > div').not($el).hide();
+            } if (this.id == 'important') {
+                var $el = $('.' + this.id).fadeIn();
+                $('#note-full-container > div').not($el).hide();
+            } else {
+                var $el = $('.' + this.id).fadeIn();
+                $('#note-full-container > div').not($el).hide();
+            }
+            $btns.removeClass('active');
+            $(this).addClass('active');
         })
-    }
 
-    function favouriteNote() {
-        $(".favourite-note").off('click').on('click', function (event) {
-            event.stopPropagation();
-            $(this).parents('.single-note-item').toggleClass('note-favourite');
+        $('#add-notes').on('click', function(event) {
+            $('#addnotesmodal').modal('show');
+            $('#btn-n-save').hide();
+            $('#btn-n-add').show();
+        })
+
+        // 개인정보 설정 버튼
+        $('#member-info-btn').on('click', function(event) {
+            $('#member-menu').modal('show');
         });
-    }
 
-    function addLabelGroups() {
-        $('.category-selector .badge-group-item').off('click').on('click', function (event) {
-            // event.preventDefault();
+        // 개인정보 메뉴 -> 비밀번호 변경 버튼
+        $("#member_info_menu_pwd_change_btn").click(function () {
+            $('#member-change').modal('show');
+        });
 
-            /* Act on the event */
-            var getclass = this.className;                     // 엘리먼트 클래스 가져오기
-            var getSplitclass = getclass.split(' ')[0];        // note-social, note-important, note-business
-            console.log("getSplitclass = " + getSplitclass);
+        // 개인정보 메뉴 -> 회원탈퇴 버튼
+        $("#member_info_menu_delete_btn").click(function () {
+            $('#member-delete').modal('show');
+        });
 
-            if ($(this).hasClass('badge-business')) {
-                $(this).parents('.single-note-item').removeClass('note-social');
-                $(this).parents('.single-note-item').removeClass('note-important');
-                $(this).parents('.single-note-item').toggleClass(getSplitclass);
-            } else if ($(this).hasClass('badge-social')) {
-                $(this).parents('.single-note-item').removeClass('note-business');
-                $(this).parents('.single-note-item').removeClass('note-important');
-                $(this).parents('.single-note-item').toggleClass(getSplitclass);
-            } else if ($(this).hasClass('badge-important')) {
-                console.log("getSplitclass => ", getSplitclass);
-                $(this).parents('.single-note-item').removeClass('note-social');
-                $(this).parents('.single-note-item').removeClass('note-business');
-                $(this).parents('.single-note-item').toggleClass(getSplitclass);
+        $('#addnotesmodal').on('hidden.bs.modal', function (event) {
+            event.preventDefault();
+            document.getElementById('note-has-title').value = '';
+            document.getElementById('note-has-description').value = '';
+        })
+
+        removeNote();
+        favouriteNote();
+        addLabelGroups();
+
+        $('#btn-n-add').attr('disabled', 'disabled');
+
+        let minPwd = 4;
+
+        // 비밀번호 에러 표시
+        $("#pwd").keyup(function () {
+            if (this.value.length >= minPwd) {
+                valid(this);
+            } else {
+                invalid(this);
+            }
+        }).change(function () {
+            console.log("비밀번호 ");
+        });
+
+        // 비밀번호 체크
+        $("#pwd_chk").keyup(function () {
+            if(this.value === $("#pwd").val()){
+                valid(this);
+            } else {
+                invalid(this);
             }
         });
-    }
 
-    var $btns = $('.note-link').click(function() {
-        if (this.id == 'all-category') {
-          var $el = $('.' + this.id).fadeIn();
-          $('#note-full-container > div').not($el).hide();
-        } if (this.id == 'important') {
-          var $el = $('.' + this.id).fadeIn();
-          $('#note-full-container > div').not($el).hide();
-        } else {
-          var $el = $('.' + this.id).fadeIn();
-          $('#note-full-container > div').not($el).hide();
-        }
-        $btns.removeClass('active');
-        $(this).addClass('active');
-    })
+        // 취소 버튼
+        $("#cancel_btn").click(function () {
+            $("#pwd").val('');
+            $("#pwd_chk").val('');
+            invalid("#pwd");
+            invalid("#pwd_chk");
+        });
 
-    $('#add-notes').on('click', function(event) {
-        $('#addnotesmodal').modal('show');
-        $('#btn-n-save').hide();
-        $('#btn-n-add').show();
-    })
+        // 변경 버튼
+        $("#change_btn").click(function () {
+            let pwd = $("#pwd");
+            let pwd_chk = $("#pwd_chk");
 
-    // 개인정보 설정 버튼
-    $('#member-info-btn').on('click', function(event) {
-        $('#member-menu').modal('show');
-    });
-
-    // 개인정보 메뉴 -> 비밀번호 변경 버튼
-    $("#member_info_menu_pwd_change_btn").click(function () {
-        $('#member-change').modal('show');
-    });
-
-    // 개인정보 메뉴 -> 회원탈퇴 버튼
-    $("#member_info_menu_delete_btn").click(function () {
-        $('#member-delete').modal('show');
-    });
-
-    $('#addnotesmodal').on('hidden.bs.modal', function (event) {
-        event.preventDefault();
-        document.getElementById('note-has-title').value = '';
-        document.getElementById('note-has-description').value = '';
-    })
-
-    removeNote();
-    favouriteNote();
-    addLabelGroups();
-
-    $('#btn-n-add').attr('disabled', 'disabled');
-
-    let minPwd = 4;
-
-    // 비밀번호 에러 표시
-    $("#pwd").keyup(function () {
-        if (this.value.length >= minPwd) {
-            valid(this);
-        } else {
-            invalid(this);
-        }
-    }).change(function () {
-        console.log("비밀번호 ");
-    });
-
-    // 비밀번호 체크
-    $("#pwd_chk").keyup(function () {
-        if(this.value === $("#pwd").val()){
-            valid(this);
-        } else {
-            invalid(this);
-        }
-    });
-
-    // 취소 버튼
-    $("#cancel_btn").click(function () {
-        $("#pwd").val('');
-        $("#pwd_chk").val('');
-        invalid("#pwd");
-        invalid("#pwd_chk");
-    });
-
-    // 변경 버튼
-    $("#change_btn").click(function () {
-        let pwd = $("#pwd");
-        let pwd_chk = $("#pwd_chk");
-
-        if(pwd.val().length >= minPwd){
-            console.log("pwd.val().length > 0 조건문 실행");
-            console.log("pwd.val.length => ", pwd.val().length);
-            if(pwd_chk.val() === pwd.val()){
-                $("#change_btn").attr("type", "submit");
+            if(pwd.val().length >= minPwd){
+                console.log("pwd.val().length > 0 조건문 실행");
+                console.log("pwd.val.length => ", pwd.val().length);
+                if(pwd_chk.val() === pwd.val()){
+                    $("#change_btn").attr("type", "submit");
+                } else {
+                    alert('비밀번호 변경 실패하였습니다.');
+                }
             } else {
                 alert('비밀번호 변경 실패하였습니다.');
             }
-        } else {
-            alert('비밀번호 변경 실패하였습니다.');
-        }
-    });
+        });
 
-    // 회원탈퇴 -> 취소 버튼
-    $("#deleteForm_cancel_btn").click(function () {
-        $("#deleteForm_delete_pwd").val('');
-    });
+        // 회원탈퇴 -> 취소 버튼
+        $("#deleteForm_cancel_btn").click(function () {
+            $("#deleteForm_delete_pwd").val('');
+        });
 
-    // 회원탈퇴 -> 탈퇴 버튼
-    $("#deleteForm_delete_btn").click(function () {
-        let pwd = $("#deleteForm_delete_pwd");
+        // 회원탈퇴 -> 탈퇴 버튼
+        $("#deleteForm_delete_btn").click(function () {
+            let pwd = $("#deleteForm_delete_pwd");
 
-        if(pwd.hasClass("is-valid")){
-            $("#deleteForm_delete_btn").attr("type", "submit");
-        } else {
-            alert("비밀번호가 일치하지 않습니다.");
-            $("#deleteForm_delete_btn").attr("type", "button");
-        }
-    });
+            if(pwd.hasClass("is-valid")){
+                $("#deleteForm_delete_btn").attr("type", "submit");
+            } else {
+                alert("비밀번호가 일치하지 않습니다.");
+                $("#deleteForm_delete_btn").attr("type", "button");
+            }
+        });
 
-    //회원탈퇴 -> 비밀번호 체크
-    $("#deleteForm_delete_pwd").keyup(function () {
-        $.ajax({
-            url:"/member/findPassword",
-            type:"post",
-            data: JSON.stringify({
-                "id" : [[${session.memberId}]],
-                "pwd": $("#deleteForm_delete_pwd").val()
-            }),
-            contentType: 'application/json',
-            dataType: "json",
-            success:function(data) {
-                if (data.status === "ok") {
-                    valid($("#deleteForm_delete_pwd"));
-                } else {
-                    invalid($("#deleteForm_delete_pwd"));
-                }
-            },
-            error: function (data) {
-                console.log("연결 실패", data);
-            },
+        //회원탈퇴 -> 비밀번호 체크
+        $("#deleteForm_delete_pwd").keyup(function () {
+            $.ajax({
+                url:"/member/findPassword",
+                type:"post",
+                data: JSON.stringify({
+                    "id" : [[${session.memberId}]],
+                    "pwd": $("#deleteForm_delete_pwd").val()
+                }),
+                contentType: 'application/json',
+                dataType: "json",
+                success:function(data) {
+                    if (data.status === "ok") {
+                        valid($("#deleteForm_delete_pwd"));
+                    } else {
+                        invalid($("#deleteForm_delete_pwd"));
+                    }
+                },
+                error: function (data) {
+                    console.log("연결 실패", data);
+                },
+            });
         });
     });
- });
 
- $('#note-has-title').keyup(function() {
-      var empty = false;
-      $('#note-has-title').each(function() {
-          if ($(this).val() == '') {
-                  empty = true;
-          }
-      });
+    $('#note-has-title').keyup(function() {
+        var empty = false;
+        $('#note-has-title').each(function() {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
 
-      if (empty) {
-          $('#btn-n-add').attr('disabled', 'disabled');
-      } else {
-          $('#btn-n-add').removeAttr('disabled');
-      }
-});
+        if (empty) {
+            $('#btn-n-add').attr('disabled', 'disabled');
+        } else {
+            $('#btn-n-add').removeAttr('disabled');
+        }
+    });
 
-function valid(id) {
-    $(id).removeClass('is-invalid').addClass('is-valid');
-}
+    function valid(id) {
+        $(id).removeClass('is-invalid').addClass('is-valid');
+    }
 
-function invalid(id) {
-    $(id).removeClass('is-valid').addClass('is-invalid');
-}
+    function invalid(id) {
+        $(id).removeClass('is-valid').addClass('is-invalid');
+    }
 
 </script>
 </body>
