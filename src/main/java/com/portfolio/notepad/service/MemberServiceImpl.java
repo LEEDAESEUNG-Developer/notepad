@@ -3,6 +3,8 @@ package com.portfolio.notepad.service;
 import com.portfolio.notepad.controller.form.MemberCreateForm;
 import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
+import com.portfolio.notepad.exception.MemberCreateError;
+import com.portfolio.notepad.exception.MemberNotFount;
 import com.portfolio.notepad.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +20,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member register(MemberCreateForm form) {
         //중복회원 검사 로직
-        if (memberJpaRepository.findByLoginId(form.getMemberId()).isPresent()) {
-            throw new IllegalStateException("이 아이디로 가입된 유저가 있습니다");
-        }
+        memberJpaRepository.findByLoginId(form.getMemberId()).ifPresent(m -> {
+            throw new MemberCreateError();
+        });
 
         Member createMember = new Member(form.getMemberId(), form.getMemberPwd());
         return memberJpaRepository.save(createMember);
@@ -35,13 +37,13 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member findMember(String id) {
         return memberJpaRepository.findByLoginId(id)
-                .orElseThrow(() -> new IllegalStateException("이 아이디로 가입된 유저가 없습니다"));
+                .orElseThrow(MemberNotFount::new);
     }
 
     @Override
     public void changeMemberPwd(MemberPwdChangeForm form) {
         Member findMember = memberJpaRepository.findById(form.getMemberId())
-                .orElseThrow(() -> new IllegalStateException("이 아이디로 가입된 유저가 없습니다"));
+                .orElseThrow(MemberNotFount::new);
 
         findMember.updatePwd(form.getPwd());
     }
@@ -49,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void deleteMember(Long memberId) {
         Member findMember = memberJpaRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalStateException("이 아이디로 가입된 유저가 없습니다"));
-        memberJpaRepository.deleteById(memberId);
+                .orElseThrow(MemberNotFount::new);
+        memberJpaRepository.deleteById(findMember.getId());
     }
 }

@@ -6,6 +6,8 @@ import com.portfolio.notepad.controller.form.NoteUpdateForm;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.entity.MemoType;
 import com.portfolio.notepad.entity.Note;
+import com.portfolio.notepad.exception.MemberNotFount;
+import com.portfolio.notepad.exception.NoteNotFound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,7 @@ class NoteServiceTest {
     void 메모추가_실패(){
         assertThatThrownBy(() -> {
             noteService.addNote(new NoteCreateForm(100L, MemoType.BUSINESS, "타이틀", "내용"));
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(MemberNotFount.class);
     }
 
     @Test
@@ -103,7 +105,7 @@ class NoteServiceTest {
         assertThatThrownBy(() -> {
             noteService.editNote(1000L, new NoteUpdateForm(MemoType.BUSINESS, "제목", "내용"));
 
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(NoteNotFound.class);
 
     }
 

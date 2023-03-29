@@ -3,8 +3,11 @@ package com.portfolio.notepad.service;
 import com.portfolio.notepad.controller.form.MemberCreateForm;
 import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
+import com.portfolio.notepad.exception.MemberCreateError;
+import com.portfolio.notepad.exception.MemberNotFount;
 import com.portfolio.notepad.repository.MemberJpaRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,11 @@ class MemberServiceImplTest {
     private MemberService memberService;
     @Autowired
     private MemberJpaRepository memberJpaRepository;
+
+    @BeforeEach
+    void beforeEach(){
+        memberJpaRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("회원가입이 되어야한다")
@@ -57,7 +65,7 @@ class MemberServiceImplTest {
         assertThatThrownBy(() -> {
             saveMember(createForm);
             saveMember(createForm);
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(MemberCreateError.class);
     }
 
     @Test
@@ -80,10 +88,6 @@ class MemberServiceImplTest {
         assertThatThrownBy(() -> {
             memberService.login("member", "1234");
         }).isInstanceOf(IllegalStateException.class);
-    }
-
-    private Member saveMember(MemberCreateForm createForm) {
-        return memberService.register(createForm);
     }
 
     @Test
@@ -113,7 +117,7 @@ class MemberServiceImplTest {
     void 회원찾기_실패(){
         assertThatThrownBy(() -> {
             memberService.findMember("memberA");
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(MemberNotFount.class);
     }
 
     @Test
@@ -157,7 +161,10 @@ class MemberServiceImplTest {
         //expected
         Assertions.assertThatThrownBy(() -> {
             memberService.deleteMember(0L);
-        }).isInstanceOf(IllegalStateException.class);
+        }).isInstanceOf(MemberNotFount.class);
     }
 
+    private Member saveMember(MemberCreateForm createForm) {
+        return memberService.register(createForm);
+    }
 }
