@@ -1,15 +1,18 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.controller.form.MemberCreateForm;
+import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.repository.MemberJpaRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -21,6 +24,7 @@ class MemberServiceImplTest {
     private MemberJpaRepository memberJpaRepository;
 
     @Test
+    @DisplayName("회원가입이 되어야한다")
     void 회원가입_성공(){
         //given
         String memberLoginId = "memberA";
@@ -41,6 +45,7 @@ class MemberServiceImplTest {
     }
 
     @Test
+    @DisplayName("중복회원인 경우는 에러가 발생해야한다")
     void 회원가입_실패(){
         //given
         String memberLoginId = "memberA";
@@ -56,6 +61,7 @@ class MemberServiceImplTest {
     }
 
     @Test
+    @DisplayName("DB에 있는 사용자라면 로그인이 되어야함")
     void 로그인_성공(){
         //given
         MemberCreateForm saveForm = new MemberCreateForm("member", "1234");
@@ -69,6 +75,7 @@ class MemberServiceImplTest {
     }
 
     @Test
+    @DisplayName("DB에 없는 사용자라면 로그인이 실패되어야함")
     void 로그인_실패() {
         assertThatThrownBy(() -> {
             memberService.login("member", "1234");
@@ -80,23 +87,29 @@ class MemberServiceImplTest {
     }
 
     @Test
+    @DisplayName("비밀번호을 잃어버린경우 아이디 찾기로 비밀번호 변경 되어야함")
     void 회원찾기_성공(){
         //given
         String memberLoginId = "memberA";
         String memberPwd = "1234";
+        String changePwd = "0000";
 
+        //회원가입
         MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
+        Member saveMember = memberService.register(createForm);
+        memberJpaRepository.save(saveMember);
 
         // when
-        Member registerMember = saveMember(createForm);
-
         Member findMember = memberService.findMember(memberLoginId);
+        findMember.updatePwd(changePwd);
 
         //then
-        assertThat(registerMember).isEqualTo(findMember);
+        Assertions.assertThat(findMember.getLoginId()).isEqualTo(memberLoginId);
+        Assertions.assertThat(findMember.getPwd()).isEqualTo(changePwd);
     }
 
     @Test
+    @DisplayName("DB에 없는 ID를 조회한 경우 에러가 발생되어야함")
     void 회원찾기_실패(){
         assertThatThrownBy(() -> {
             memberService.findMember("memberA");
@@ -104,7 +117,8 @@ class MemberServiceImplTest {
     }
 
     @Test
-    void 비밀번호_성공(){
+    @DisplayName("아이디 찾기를 통해서 비밀번호 변경이 되어야함")
+    void 비밀번호_변경_성공(){
         //given
         String memberLoginId = "memberA";
         String memberPwd = "1234";
@@ -123,6 +137,7 @@ class MemberServiceImplTest {
     }
 
     @Test
+    @DisplayName("회원이 삭제가 되어야함")
     void 회원삭제(){
         //given
         String memberLoginId = "memberA";
@@ -134,6 +149,15 @@ class MemberServiceImplTest {
 
         //then
         memberService.deleteMember(saveMember.getId());
+    }
+
+    @Test
+    @DisplayName("없는 회원이 삭제할 경우 에러가 발생해야함")
+    void 회원삭제_실패(){
+        //expected
+        Assertions.assertThatThrownBy(() -> {
+            memberService.deleteMember(0L);
+        }).isInstanceOf(IllegalStateException.class);
     }
 
 }
