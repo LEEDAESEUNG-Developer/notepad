@@ -1,5 +1,6 @@
 package com.portfolio.notepad.entity;
 
+import com.portfolio.notepad.controller.form.MemberCreateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
-    private java.lang.Long id;
+    private Long id;
 
     private String loginId;
     private String pwd;
@@ -32,6 +33,10 @@ public class Member extends BaseEntity {
 
     //== 비즈니스 로직 ==//
 
+    public static Member createMember(MemberCreateForm form){
+        return new Member(form.getMemberId(), form.getMemberPwd());
+    }
+
     /**
      * 비밀번호 수정
      * @param pwd String
@@ -39,4 +44,5 @@ public class Member extends BaseEntity {
     public void updatePwd(String pwd){
         this.pwd = pwd;
     }
+
 }

@@ -1,14 +1,12 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.controller.form.MemberCreateForm;
+import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member register(MemberCreateForm form) {
         //중복회원 검사 로직
-        if(memberJpaRepository.findByLoginId(form.getMemberId()).isPresent()){
+        if (memberJpaRepository.findByLoginId(form.getMemberId()).isPresent()) {
             throw new IllegalStateException("이 아이디로 가입된 유저가 있습니다");
         }
 
@@ -50,9 +48,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void deleteMember(Long memberId) {
-        Optional<Member> findMember = memberJpaRepository.findById(memberId);
-        if(findMember.isPresent()){
-            memberJpaRepository.deleteById(memberId);
-        }
+        Member findMember = memberJpaRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalStateException("이 아이디로 가입된 유저가 없습니다"));
+        memberJpaRepository.deleteById(memberId);
     }
 }
