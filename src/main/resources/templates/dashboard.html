@@ -55,14 +55,16 @@
                         <div class="col-md-4 single-note-item all-category note-business">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
-                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
+                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i
+                                        class="point fa fa-circle ml-1 font-10"></i></h5>
+                                <!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i
+                                            class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -72,7 +74,8 @@
                                                     <div class="category-business"></div>
                                                     <div class="category-social"></div>
                                                     <div class="category-important"></div>
-                                                    <span class="more-options text-dark"> <i class="icon-options-vertical"></i> </span>
+                                                    <span class="more-options text-dark"> <i
+                                                            class="icon-options-vertical"></i> </span>
                                                 </div>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right category-menu">
@@ -99,14 +102,16 @@
                         <div class="col-md-4 single-note-item all-category note-social">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
-                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
+                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i
+                                        class="point fa fa-circle ml-1 font-10"></i></h5>
+                                <!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i
+                                            class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -144,14 +149,16 @@
                         <div class="col-md-4 single-note-item all-category note-important">
                             <div class="card card-body">
                                 <span class="side-stick"></span>
-                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i class="point fa fa-circle ml-1 font-10"></i></h5>
-<!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
+                                <h5 class="note-title text-truncate w-75 mb-0">[(${note.title})]<i
+                                        class="point fa fa-circle ml-1 font-10"></i></h5>
+                                <!--                                <p class="note-date font-12 text-muted" th:text="${#dates.format(note.getRegDate, 'yy/MM/dd HH:mm:ss')}"></p>-->
                                 <div class="note-content">
                                     <p class="note-inner-content text-muted">[(${note.description})]</p>
                                 </div>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i class="fa fa-trash remove-note"></i></a></span>
+                                    <span class="mr-1"><a th:href="@{/deleteNote(noteId = ${note.id})}"><i
+                                            class="fa fa-trash remove-note"></i></a></span>
                                     <div class="ml-auto">
                                         <div class="category-selector btn-group">
                                             <a class="nav-link dropdown-toggle category-dropdown label-group p-0"
@@ -258,9 +265,15 @@
                     </button>
                 </div>
                 <div>
-                    <a href="/member/logout"><button id="member_info_menu_logout_btn" class="btn btn-outline-primary col-sm-12 mt-5">로그아웃</button></a>
-                    <button id="member_info_menu_pwd_change_btn" class="btn btn-outline-primary col-sm-12 mt-5 mb-5">비밀번호 변경</button>
-                    <button id="member_info_menu_delete_btn" class="btn btn-outline-primary col-sm-12 mb-5">회원 탈퇴</button>
+                    <a href="/member/logout">
+                        <button id="member_info_menu_logout_btn" class="btn btn-outline-primary col-sm-12 mt-5">로그아웃
+                        </button>
+                    </a>
+                    <button id="member_info_menu_pwd_change_btn" class="btn btn-outline-primary col-sm-12 mt-5 mb-5">
+                        비밀번호 변경
+                    </button>
+                    <button id="member_info_menu_delete_btn" class="btn btn-outline-primary col-sm-12 mb-5">회원 탈퇴
+                    </button>
                 </div>
             </div>
         </div>
@@ -281,7 +294,8 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>회원 아이디</label>
-                                            <input class="form-control" th:value="${session.member.loginId}" value="아이디" readonly/>
+                                            <input class="form-control" th:value="${session.member.loginId}" value="아이디"
+                                                   readonly/>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -309,7 +323,8 @@
                             <button id="btn-member-change" class="float-left btn btn-success" style="display: none;">
                                 Save
                             </button>
-                            <button type="reset" id="cancel_btn" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                            <button type="reset" id="cancel_btn" class="btn btn-secondary" data-dismiss="modal">취소
+                            </button>
                             <button type="button" id="change_btn" class="btn btn-success">변경</button>
                         </div>
                     </div>
@@ -333,7 +348,8 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>회원 아이디</label>
-                                            <input class="form-control" id="memberID" th:value="${session.member.loginId}"
+                                            <input class="form-control" id="memberID"
+                                                   th:value="${session.member.loginId}"
                                                    value="아이디" readonly/>
                                         </div>
                                     </div>
@@ -368,9 +384,9 @@
     </div>
 </div>
 <script th:inline="javascript">
-    $(function() {
+    $(function () {
         function removeNote() {
-            $(".remove-note").off('click').on('click', function(event) {
+            $(".remove-note").off('click').on('click', function (event) {
                 event.stopPropagation();
                 $(this).parents('.single-note-item').remove();
             })
@@ -409,11 +425,12 @@
             });
         }
 
-        var $btns = $('.note-link').click(function() {
+        var $btns = $('.note-link').click(function () {
             if (this.id == 'all-category') {
                 var $el = $('.' + this.id).fadeIn();
                 $('#note-full-container > div').not($el).hide();
-            } if (this.id == 'important') {
+            }
+            if (this.id == 'important') {
                 var $el = $('.' + this.id).fadeIn();
                 $('#note-full-container > div').not($el).hide();
             } else {
@@ -424,14 +441,14 @@
             $(this).addClass('active');
         })
 
-        $('#add-notes').on('click', function(event) {
+        $('#add-notes').on('click', function (event) {
             $('#addnotesmodal').modal('show');
             $('#btn-n-save').hide();
             $('#btn-n-add').show();
         })
 
         // 개인정보 설정 버튼
-        $('#member-info-btn').on('click', function(event) {
+        $('#member-info-btn').on('click', function (event) {
             $('#member-menu').modal('show');
         });
 
@@ -472,7 +489,7 @@
 
         // 비밀번호 체크
         $("#pwd_chk").keyup(function () {
-            if(this.value === $("#pwd").val()){
+            if (this.value === $("#pwd").val()) {
                 valid(this);
             } else {
                 invalid(this);
@@ -492,10 +509,10 @@
             let pwd = $("#pwd");
             let pwd_chk = $("#pwd_chk");
 
-            if(pwd.val().length >= minPwd){
+            if (pwd.val().length >= minPwd) {
                 console.log("pwd.val().length > 0 조건문 실행");
                 console.log("pwd.val.length => ", pwd.val().length);
-                if(pwd_chk.val() === pwd.val()){
+                if (pwd_chk.val() === pwd.val()) {
                     $("#change_btn").attr("type", "submit");
                 } else {
                     alert('비밀번호 변경 실패하였습니다.');
@@ -514,7 +531,7 @@
         $("#deleteForm_delete_btn").click(function () {
             let pwd = $("#deleteForm_delete_pwd");
 
-            if(pwd.hasClass("is-valid")){
+            if (pwd.hasClass("is-valid")) {
                 $("#deleteForm_delete_btn").attr("type", "submit");
             } else {
                 alert("비밀번호가 일치하지 않습니다.");
@@ -525,15 +542,15 @@
         //회원탈퇴 -> 비밀번호 체크
         $("#deleteForm_delete_pwd").keyup(function () {
             $.ajax({
-                url:"/member/findPassword",
-                type:"post",
+                url: "/member/findPassword",
+                type: "post",
                 data: JSON.stringify({
-                    "id" : [[${session.memberId}]],
+                    "id": [[${session.memberId}]],
                     "pwd": $("#deleteForm_delete_pwd").val()
                 }),
                 contentType: 'application/json',
                 dataType: "json",
-                success:function(data) {
+                success: function (data) {
                     if (data.status === "ok") {
                         valid($("#deleteForm_delete_pwd"));
                     } else {
@@ -547,9 +564,9 @@
         });
     });
 
-    $('#note-has-title').keyup(function() {
+    $('#note-has-title').keyup(function () {
         var empty = false;
-        $('#note-has-title').each(function() {
+        $('#note-has-title').each(function () {
             if ($(this).val() == '') {
                 empty = true;
             }

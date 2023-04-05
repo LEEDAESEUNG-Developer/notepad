@@ -2,6 +2,7 @@ package com.portfolio.notepad.controller;
 
 import com.portfolio.notepad.controller.form.MemberCreateForm;
 import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.session.MemberSession;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,8 @@ public class MemberController {
 
         if(session.getAttribute("member") != null) return "redirect:/notes";
 
-        Member member = memberService.login(id, pwd);
-        session.setAttribute("member", member);
+        MemberSession memberSession = new MemberSession(memberService.login(id, pwd));
+        session.setAttribute("member", memberSession);
         return "redirect:/notes";
     }
 /*

@@ -1,17 +1,16 @@
 package com.portfolio.notepad.controller.session;
 
-import lombok.Builder;
+import com.portfolio.notepad.entity.Member;
 import lombok.Getter;
 
 @Getter
 public class MemberSession {
 
     private final Long id;
-    private final String memberId;
+    private final String loginId;
 
-    @Builder
-    public MemberSession(Long id, String memberId) {
-        this.id = id;
-        this.memberId = memberId;
+    public MemberSession(Member member){
+        this.id = member.getId();
+        this.loginId = member.getLoginId();
     }
 }

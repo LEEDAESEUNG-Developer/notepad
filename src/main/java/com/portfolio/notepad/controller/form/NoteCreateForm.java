@@ -1,6 +1,5 @@
 package com.portfolio.notepad.controller.form;
 
-import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.entity.MemoType;
 import lombok.Data;
 
