@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<script th:inline="javascript">
+    const title = [[${#fields.errors('noteCreateForm.title')}]].pop();
+    const description = [[${#fields.errors('noteCreateForm.description')}]].pop();
+    let message = "";
+    if(title != null){
+        message += `제목: ${title} \n`;
+    }
+    if(description != null){
+        message += `내용: ${description} \n`;
+    }
+    alert(message);
+    location.href = "/notes";
+</script>
+</body>
+</html>

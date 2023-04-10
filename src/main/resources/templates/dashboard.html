@@ -227,15 +227,15 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="note-title">
                                             <label>노트 제목</label>
-                                            <input type="text" id="note-has-title" class="form-control" name="title"
-                                                   minlength="1" maxlength="15" placeholder="Title"/>
+                                            <input type="text" th:field="*{title}" id="note-has-title" class="form-control" name="title"
+                                                   minlength="1" maxlength="15" placeholder="Title" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="note-description">
                                             <label>노트 내용</label>
-                                            <textarea id="note-has-description" class="form-control" minlength="1"
+                                            <textarea id="note-has-description" th:field="*{description}" class="form-control" minlength="1"
                                                       name="description" placeholder="Description" rows="3"></textarea>
                                         </div>
                                     </div>

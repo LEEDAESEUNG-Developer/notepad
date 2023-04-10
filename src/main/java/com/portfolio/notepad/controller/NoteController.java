@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -21,14 +23,17 @@ public class NoteController {
 
     private final NoteService noteService;
 
-    // CRUD
-
     /**
      * 게시판 생성
      * @param form 노트객체
      */
     @PostMapping("/noteAdd")
-    public String noteAdd(@ModelAttribute NoteCreateForm form, @SessionAttribute("member") MemberSession member) {
+    public String noteAdd(@Valid @ModelAttribute("noteCreateForm") NoteCreateForm form, BindingResult bindingResult, @SessionAttribute("member") MemberSession member) {
+
+        if(bindingResult.hasErrors()){ // form 값 검증
+            return "addNoteError";
+        }
+
         form.setMemberId(member.getId()); // 바꺼보는걸로
         log.debug("/noteAdd -> note => {}", form);
         noteService.addNote(form);
