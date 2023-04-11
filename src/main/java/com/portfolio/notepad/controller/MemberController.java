@@ -3,7 +3,6 @@ package com.portfolio.notepad.controller;
 import com.portfolio.notepad.controller.form.MemberCreateForm;
 import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
 import com.portfolio.notepad.controller.session.MemberSession;
-import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +33,9 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@RequestParam String id, @RequestParam String pwd, HttpSession session) {
 
-        if(session.getAttribute("member") != null) return "redirect:/notes";
-
         MemberSession memberSession = new MemberSession(memberService.login(id, pwd));
         session.setAttribute("member", memberSession);
+
         return "redirect:/notes";
     }
 /*
@@ -59,21 +57,17 @@ public class MemberController {
     }*/
 
     @PostMapping("/change/password")
-    public String passwordChange(
-            @SessionAttribute(name = "member") Member sessionMember,
-            @ModelAttribute MemberPwdChangeForm form){
+    public String passwordChange(@ModelAttribute MemberPwdChangeForm form, @SessionAttribute("member") MemberSession memberSession){
 
-        form.setMemberId(sessionMember.getId());
+        form.setMemberId(memberSession.getId());
         memberService.changeMemberPwd(form);
         
         return "redirect:/notes";
     }
 
     @PostMapping("/delete")
-    public String delete(@SessionAttribute("member") Member member) {
-//        if(memberId == null) return login(member, httpSession); // 회원 없는 사람이 비밀번호 변경 방지
-
-        memberService.deleteMember(member.getId());
+    public String delete(@SessionAttribute("member") MemberSession memberSession) {
+        memberService.deleteMember(memberSession.getId());
 
         return "redirect:/";
     }
@@ -83,6 +77,5 @@ public class MemberController {
         httpSession.invalidate();
         return "redirect:/";
     }
-
 
 }

@@ -28,14 +28,13 @@ public class NoteController {
      * @param form 노트객체
      */
     @PostMapping("/noteAdd")
-    public String noteAdd(@Valid @ModelAttribute("noteCreateForm") NoteCreateForm form, BindingResult bindingResult, @SessionAttribute("member") MemberSession member) {
+    public String noteAdd(@Valid @ModelAttribute("noteCreateForm") NoteCreateForm form, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){ // form 값 검증
             return "addNoteError";
         }
 
-        form.setMemberId(member.getId()); // 바꺼보는걸로
-        log.debug("/noteAdd -> note => {}", form);
+        form.setMemberId(1L); // 바꺼보는걸로
         noteService.addNote(form);
 
         return "redirect:notes";
@@ -45,10 +44,9 @@ public class NoteController {
      * 회원 메모들을 가지고 오기
      */
     @GetMapping("/notes")
-    public String notes(@SessionAttribute(name = "member", required = false) MemberSession member, Model model) {
-        if (member == null) return "redirect:/";
+    public String notes(Model model, @SessionAttribute("member") MemberSession memberSession) {
 
-        Long memberId = member.getId();
+        Long memberId = memberSession.getId();
 
         List<Note> notes = noteService.getNotes(memberId);
 
@@ -64,7 +62,7 @@ public class NoteController {
      * @param type
      */
     @GetMapping(value = "/typeupdate", params = {"noteId", "type"})
-    public String typeupdate(@RequestParam("noteId") Long noteId, @RequestParam String type, @SessionAttribute("member") MemberSession member) {
+    public String typeupdate(@RequestParam("noteId") Long noteId, @RequestParam String type) {
         Note findNote = noteService.getNote(noteId);
         NoteUpdateForm form = new NoteUpdateForm(MemoType.valueOf(type), findNote.getTitle(), findNote.getDescription());
         noteService.editNote(noteId, form);
@@ -76,8 +74,7 @@ public class NoteController {
      * @param noteId 메모객체(메모 아이디)
      */
     @GetMapping(value = "/deleteNote", params = "noteId")
-    public String deleteNote(@RequestParam Long noteId, @SessionAttribute("member") MemberSession member) {
-        if(member == null ) return "redirect:/";
+    public String deleteNote(@RequestParam Long noteId) {
 
         noteService.deleteNote(noteId);
 
