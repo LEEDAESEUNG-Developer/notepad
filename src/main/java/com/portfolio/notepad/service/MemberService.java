@@ -1,7 +1,7 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.MemberCreateForm;
-import com.portfolio.notepad.controller.form.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.form.member.MemberCreateForm;
+import com.portfolio.notepad.controller.form.member.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
 import org.springframework.transaction.annotation.Transactional;
 

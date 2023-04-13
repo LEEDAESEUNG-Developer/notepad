@@ -1,6 +1,6 @@
 package com.portfolio.notepad.controller;
 
-import com.portfolio.notepad.controller.form.NoteCreateForm;
+import com.portfolio.notepad.controller.form.note.NoteCreateForm;
 import com.portfolio.notepad.controller.session.MemberSession;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.entity.MemoType;

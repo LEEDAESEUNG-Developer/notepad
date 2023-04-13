@@ -1,6 +1,6 @@
 package com.portfolio.notepad.entity;
 
-import com.portfolio.notepad.controller.form.MemberCreateForm;
+import com.portfolio.notepad.controller.form.member.MemberCreateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.portfolio.notepad.controller.form;
+package com.portfolio.notepad.controller.form.note;
 
 import com.portfolio.notepad.entity.MemoType;
 import lombok.Data;

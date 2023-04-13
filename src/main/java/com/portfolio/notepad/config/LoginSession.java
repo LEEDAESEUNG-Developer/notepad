@@ -16,7 +16,7 @@ public class LoginSession implements Filter {
     private static final String SESSION_ID = "member";
 
     // 세션이 없는 사용자도 접속허가할 URL
-    private static final String[] WHITELIST = {"/", "/index", "/member/register", "/member/login", "/stylesheet/"};
+    private static final String[] WHITELIST = {"/", "/index", "/member/register", "/member/login", "/stylesheet/", "/h2-console"};
 
 
     @Override

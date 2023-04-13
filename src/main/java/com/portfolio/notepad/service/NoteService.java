@@ -1,7 +1,7 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.NoteCreateForm;
-import com.portfolio.notepad.controller.form.NoteUpdateForm;
+import com.portfolio.notepad.controller.form.note.NoteCreateForm;
+import com.portfolio.notepad.controller.form.note.NoteUpdateForm;
 import com.portfolio.notepad.entity.Note;
 import org.springframework.transaction.annotation.Transactional;
 

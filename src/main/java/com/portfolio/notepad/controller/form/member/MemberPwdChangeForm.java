@@ -1,4 +1,4 @@
-package com.portfolio.notepad.controller.form;
+package com.portfolio.notepad.controller.form.member;
 
 import lombok.Data;
 

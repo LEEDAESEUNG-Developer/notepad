@@ -3,6 +3,7 @@ package com.portfolio.notepad.controller;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.exception.MemberNotFount;
 import com.portfolio.notepad.repository.MemberJpaRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,11 @@ class MemberControllerTest {
     @Autowired
     private MemberJpaRepository memberJpaRepository;
 
+    @AfterEach
+    void afterEach(){
+        memberJpaRepository.deleteAll();
+    }
+
     @BeforeEach
     void beforeEach(){
         Member member = new Member("test", "1234");
@@ -53,8 +59,9 @@ class MemberControllerTest {
                 .orElseThrow(MemberNotFount::new);
 
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        param.add("id", findMember.getLoginId());
-        param.add("pwd", findMember.getPwd());
+        param.add("userId", findMember.getLoginId());
+        param.add("password", findMember.getPwd());
+        param.add("idSave", "true");
 
         //expected
         mockMvc.perform(post("/member/login")
@@ -62,6 +69,29 @@ class MemberControllerTest {
                         .params(param))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/notes"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @DisplayName("로그인을 할 때 아이디 저장이 되어어야함")
+    void login_cookie_O() throws Exception {
+        // given
+        Member findMember = memberJpaRepository.findByLoginIdAndPwd("test", "1234")
+                .orElseThrow(MemberNotFount::new);
+
+        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        param.add("userId", findMember.getLoginId());
+        param.add("password", findMember.getPwd());
+        param.add("idSave", "true");
+
+        //expected
+        mockMvc.perform(post("/member/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .params(param))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/notes"))
+                .andExpect(MockMvcResultMatchers.cookie().value("id", "test"))
+                .andExpect(MockMvcResultMatchers.cookie().value("idSave", "true"))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

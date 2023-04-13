@@ -1,6 +1,6 @@
 package com.portfolio.notepad.entity;
 
-import com.portfolio.notepad.controller.form.NoteUpdateForm;
+import com.portfolio.notepad.controller.form.note.NoteUpdateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
