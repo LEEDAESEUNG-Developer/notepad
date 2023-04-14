@@ -14,10 +14,13 @@ import com.portfolio.notepad.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -39,7 +42,12 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(MemberLoginForm form, HttpSession session, HttpServletResponse response) {
+    public String login(@Valid @ModelAttribute(name = "form") MemberLoginForm form, BindingResult bindingResult, HttpSession session, HttpServletResponse response) {
+
+        if (bindingResult.hasErrors()){
+            bindingResult.addError(new ObjectError("loginFail", "아이디, 비밀번호를 확인해주세요."));
+            return "index";
+        }
 
         CookieInfo saveCookie[] = new CookieInfo[2];
         String domain = "127.0.0.1";
@@ -47,12 +55,16 @@ public class MemberController {
         saveCookie[0] = new CookieInfo("id", form.getUserId(), domain);
         saveCookie[1] = new CookieInfo("idSave", Boolean.toString(form.getIdSave()), domain);
 
-        cookieSaveDelete(response, form.getIdSave(), saveCookie);
+        cookieSaveAndDelete(response, form.getIdSave(), saveCookie);
 
-        MemberSession memberSession = new MemberSession(memberService.login(form.getUserId(), form.getPassword()));
-        session.setAttribute("member", memberSession);
-
-        return "redirect:/notes";
+        try { // 인터셉터를 이용하면 코드를 줄 일수 있지 않을까?
+            MemberSession memberSession = new MemberSession(memberService.login(form.getUserId(), form.getPassword()));
+            session.setAttribute("member", memberSession);
+            return "redirect:/notes";
+        } catch (IllegalStateException e) {
+            bindingResult.addError(new ObjectError("loginFail", e.getMessage()));
+            return "index";
+        }
     }
 
     // 비밀번호 찾기
@@ -91,7 +103,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    private void cookieSaveDelete(HttpServletResponse response, Boolean isSave, CookieInfo ...cookieInfos){
+    private void cookieSaveAndDelete(HttpServletResponse response, Boolean isSave, CookieInfo ...cookieInfos){
         if(isSave){
             for (CookieInfo cookieInfo : cookieInfos) {
                 CookieUtil.cookieCreate(cookieInfo, response);

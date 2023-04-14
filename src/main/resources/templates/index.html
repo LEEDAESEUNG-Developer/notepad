@@ -23,12 +23,17 @@
 						<input type="text" class="form-control" name="userId" placeholder="id" th:field="*{userId}">
 					</div>
 					<span class="help-block"></span>
-										
+
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
 						<input type="password" class="form-control" name="password" placeholder="Password" th:field="*{password}">
 					</div>
-                    <span class="help-block">Password error</span>
+
+					<!-- 에러 메시지 -->
+					<div>
+						<span class="field-error help-block" th:if="${!#fields.hasGlobalErrors()}">&nbsp;</span>
+						<span class="field-error help-block" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+					</div>
 
 					<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 
@@ -63,14 +68,14 @@
     text-align: center;
     line-height: 300%;
 }
-	
+
 .omb_login .omb_socialButtons a {
-	color: white; // In yourUse @body-bg 
+	color: white; // In yourUse @body-bg
 	opacity:0.9;
 }
 .omb_login .omb_socialButtons a:hover {
     color: white;
-	opacity:1;    	
+	opacity:1;
 }
 .omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
 .omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
@@ -101,7 +106,7 @@
 	background-color: white;
 	width: 3em;
 	text-align: center;
-}			
+}
 
 .omb_login .omb_loginForm .input-group.i {
 	width: 2em;
@@ -110,12 +115,12 @@
     color: red;
 }
 
-	
+
 @media (min-width: 768px) {
     .omb_login .omb_forgotPwd {
         text-align: right;
 		margin-top:10px;
- 	}		
+ 	}
 }
 
 
@@ -126,6 +131,7 @@
 .w-104 {
 	width: 104px;
 }
+
 </style>
 
 </body>

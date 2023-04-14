@@ -31,12 +31,12 @@ class MemberControllerTest {
     private MemberJpaRepository memberJpaRepository;
 
     @AfterEach
-    void afterEach(){
+    void afterEach() {
         memberJpaRepository.deleteAll();
     }
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         Member member = new Member("test", "1234");
         memberJpaRepository.save(member);
     }
@@ -92,6 +92,17 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/notes"))
                 .andExpect(MockMvcResultMatchers.cookie().value("id", "test"))
                 .andExpect(MockMvcResultMatchers.cookie().value("idSave", "true"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @DisplayName("로그인을 할 때 아이이, 비밀번호 틀리면 접속이 안되어야함")
+    void login_fail() throws Exception {
+        //expected
+        mockMvc.perform(post("/member/login")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("form", "userId", "password"))
                 .andDo(MockMvcResultHandlers.print());
     }
 }
