@@ -1,6 +1,6 @@
 package com.portfolio.notepad.entity;
 
-import com.portfolio.notepad.controller.form.member.MemberCreateForm;
+import com.portfolio.notepad.controller.request.member.MemberCreateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +13,14 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString(of = {"loginId", "pwd"})
+@ToString(of = {"id", "loginId", "pwd"})
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
+    @Column(unique=true)
     private String loginId;
     private String pwd;
 

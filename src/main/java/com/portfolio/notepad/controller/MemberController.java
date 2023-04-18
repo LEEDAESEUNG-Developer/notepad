@@ -1,16 +1,14 @@
 package com.portfolio.notepad.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.portfolio.notepad.controller.form.member.MemberCreateForm;
-import com.portfolio.notepad.controller.form.member.MemberFindForm;
-import com.portfolio.notepad.controller.form.member.MemberLoginForm;
-import com.portfolio.notepad.controller.form.member.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.request.member.MemberCreateForm;
+import com.portfolio.notepad.controller.request.member.MemberFindPwdForm;
+import com.portfolio.notepad.controller.request.member.MemberLoginForm;
+import com.portfolio.notepad.controller.request.member.MemberPwdChangeForm;
 import com.portfolio.notepad.controller.session.MemberSession;
+import com.portfolio.notepad.exception.MemberNotFount;
+import com.portfolio.notepad.service.MemberService;
 import com.portfolio.notepad.util.cookie.CookieInfo;
 import com.portfolio.notepad.util.cookie.CookieUtil;
-import com.portfolio.notepad.entity.Member;
-import com.portfolio.notepad.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -67,20 +65,33 @@ public class MemberController {
         }
     }
 
-    // 비밀번호 찾기
-    @ResponseBody
-    @PostMapping("/findPassword")
-    public String findPassword(@RequestBody MemberFindForm form) {
-        JsonObject jsonObject = new JsonObject();
-        Member findMember = memberService.findMember(form.getLoginId());
-
-        if (form.getLoginId().equals(findMember.getLoginId())) {
-            jsonObject.addProperty("status", "ok");
-        } else {
-            jsonObject.addProperty("status", "bad");
-        }
-        return new Gson().toJson(jsonObject);
+    @GetMapping("/find/password")
+    public String passwordFindForm(@ModelAttribute(name = "form") MemberFindPwdForm form) {
+        return "findPassword";
     }
+
+    @PostMapping("/find/password")
+    public String passwordFind(@Valid @ModelAttribute(name = "form") MemberFindPwdForm form, BindingResult bindingResult){
+        /**
+         * DB에 아이디가 존재하는지 체크
+         * 있으면 : 입력한 아이디에 비밀번호 변경
+         * 없으면 : 회원가입 하라고 안내보내기
+         */
+        if(bindingResult.hasErrors()){
+            bindingResult.addError(new ObjectError("form", "아이디 또는 비밀번호에 공백이 있습니다."));
+            return "findPassword";
+        }
+
+        try {
+            memberService.findMemberPasswordChange(form);
+        } catch (MemberNotFount e){
+            bindingResult.addError(new ObjectError("form", e.getMessage()));
+            return "findPassword";
+        }
+
+        return "redirect:/";
+    }
+
 
     @PostMapping("/change/password")
     public String passwordChange(@ModelAttribute MemberPwdChangeForm form, @SessionAttribute("member") MemberSession memberSession){

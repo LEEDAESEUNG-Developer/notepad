@@ -1,7 +1,8 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.member.MemberCreateForm;
-import com.portfolio.notepad.controller.form.member.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.request.member.MemberCreateForm;
+import com.portfolio.notepad.controller.request.member.MemberFindPwdForm;
+import com.portfolio.notepad.controller.request.member.MemberPwdChangeForm;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.exception.MemberCreateError;
 import com.portfolio.notepad.exception.MemberNotFount;
@@ -42,7 +43,8 @@ class MemberServiceImplTest {
 
         // when
         Member registerMember = saveMember(createForm);
-        Member findMember = memberService.login(memberLoginId, memberPwd);
+        Member findMember = memberJpaRepository.findByLoginIdAndPwd(memberLoginId, memberPwd)
+                .orElseThrow(MemberNotFount::new);
 
         //then
         assertThat(registerMember.getId()).isEqualTo(findMember.getId());
@@ -72,14 +74,13 @@ class MemberServiceImplTest {
     @DisplayName("DB에 있는 사용자라면 로그인이 되어야함")
     void 로그인_성공(){
         //given
-        MemberCreateForm saveForm = new MemberCreateForm("member", "1234");
+        Member member = memberJpaRepository.save(new Member("member", "1234"));
 
         // when
-        Member saveMember = saveMember(saveForm);
         Member findMember = memberService.login("member", "1234");
 
         //then
-        assertThat(saveMember).isEqualTo(findMember);
+        assertThat(member).isEqualTo(findMember);
     }
 
     @Test
@@ -99,25 +100,20 @@ class MemberServiceImplTest {
         String changePwd = "0000";
 
         //회원가입
-        MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
-        Member saveMember = memberService.register(createForm);
-        memberJpaRepository.save(saveMember);
+        Member findMember = new Member(memberLoginId, memberPwd);
+        memberJpaRepository.save(findMember);
+
+        MemberFindPwdForm form = MemberFindPwdForm.builder()
+                .loginId(memberLoginId)
+                .changePassword(changePwd)
+                .build();
 
         // when
-        Member findMember = memberService.findMember(memberLoginId);
-        findMember.updatePwd(changePwd);
+        memberService.findMemberPasswordChange(form);
 
         //then
         Assertions.assertThat(findMember.getLoginId()).isEqualTo(memberLoginId);
         Assertions.assertThat(findMember.getPwd()).isEqualTo(changePwd);
-    }
-
-    @Test
-    @DisplayName("DB에 없는 ID를 조회한 경우 에러가 발생되어야함")
-    void 회원찾기_실패(){
-        assertThatThrownBy(() -> {
-            memberService.findMember("memberA");
-        }).isInstanceOf(MemberNotFount.class);
     }
 
     @Test

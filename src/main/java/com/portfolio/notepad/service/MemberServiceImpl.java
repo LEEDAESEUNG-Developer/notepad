@@ -1,7 +1,11 @@
 package com.portfolio.notepad.service;
 
-import com.portfolio.notepad.controller.form.member.MemberCreateForm;
-import com.portfolio.notepad.controller.form.member.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.request.member.MemberCreateForm;
+import com.portfolio.notepad.controller.request.member.MemberFindForm;
+import com.portfolio.notepad.controller.request.member.MemberFindPwdForm;
+import com.portfolio.notepad.controller.request.member.MemberPwdChangeForm;
+import com.portfolio.notepad.controller.response.FindPassword;
+import com.portfolio.notepad.controller.response.FindPasswordStatus;
 import com.portfolio.notepad.entity.Member;
 import com.portfolio.notepad.exception.MemberCreateError;
 import com.portfolio.notepad.exception.MemberNotFount;
@@ -35,9 +39,19 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findMember(String id) {
-        return memberJpaRepository.findByLoginId(id)
+    public FindPassword checkPassword(MemberFindForm form) {
+        Member findMember = memberJpaRepository.findByLoginId(form.getLoginId())
                 .orElseThrow(MemberNotFount::new);
+        FindPassword response = new FindPassword();
+
+        if (form.getLoginId().equals(findMember.getLoginId()) &&
+                form.getPwd().equals(findMember.getPwd())) {
+            response.setStatus(FindPasswordStatus.OK);
+        } else {
+            response.setStatus(FindPasswordStatus.FAIL);
+        }
+
+        return response;
     }
 
     @Override
@@ -46,6 +60,14 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(MemberNotFount::new);
 
         findMember.updatePwd(form.getPwd());
+    }
+
+    @Override
+    public void findMemberPasswordChange(MemberFindPwdForm form) {
+        Member findMember = memberJpaRepository.findByLoginId(form.getLoginId())
+                .orElseThrow(MemberNotFount::new);
+
+        findMember.updatePwd(form.getChangePassword());
     }
 
     @Override

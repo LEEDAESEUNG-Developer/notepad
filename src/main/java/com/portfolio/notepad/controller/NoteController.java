@@ -1,7 +1,7 @@
 package com.portfolio.notepad.controller;
 
-import com.portfolio.notepad.controller.form.note.NoteCreateForm;
-import com.portfolio.notepad.controller.form.note.NoteUpdateForm;
+import com.portfolio.notepad.controller.request.note.NoteCreateForm;
+import com.portfolio.notepad.controller.request.note.NoteUpdateForm;
 import com.portfolio.notepad.controller.session.MemberSession;
 import com.portfolio.notepad.entity.MemoType;
 import com.portfolio.notepad.entity.Note;
@@ -34,7 +34,7 @@ public class NoteController {
             return "addNoteError";
         }
 
-        form.setMemberId(1L); // 바꺼보는걸로
+        form.setMemberId(form.getMemberId()); // 바꺼보는걸로
         noteService.addNote(form);
 
         return "redirect:notes";

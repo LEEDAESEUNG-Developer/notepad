@@ -542,16 +542,17 @@
         //회원탈퇴 -> 비밀번호 체크
         $("#deleteForm_delete_pwd").keyup(function () {
             $.ajax({
-                url: "/member/findPassword",
+                url: "/api/member/checkPassword",
                 type: "post",
                 data: JSON.stringify({
-                    "id": [[${session.memberId}]],
+                    "id": [[${session.member.loginId}]],
                     "pwd": $("#deleteForm_delete_pwd").val()
                 }),
                 contentType: 'application/json',
                 dataType: "json",
                 success: function (data) {
-                    if (data.status === "ok") {
+                    console.log("data =>> " + data);
+                    if (data.status === "OK") {
                         valid($("#deleteForm_delete_pwd"));
                     } else {
                         invalid($("#deleteForm_delete_pwd"));
