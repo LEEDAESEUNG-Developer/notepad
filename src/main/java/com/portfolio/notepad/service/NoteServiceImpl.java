@@ -23,8 +23,8 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     @Transactional
-    public Note addNote(NoteCreateForm form) {
-        Member findMember = memberJpaRepository.findById(form.getMemberId())
+    public Note addNote(Long memberId, NoteCreateForm form) {
+        Member findMember = memberJpaRepository.findById(memberId)
                 .orElseThrow(MemberNotFount::new);
 
         return noteJpaRepository.save(new Note(findMember, form.getMemoType(), form.getTitle(), form.getDescription()));

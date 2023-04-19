@@ -9,8 +9,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class NoteCreateForm {
 
-    private Long memberId;
-
     private MemoType memoType;
 
     @NotBlank(message = "공백으로 둘 수 없습니다.")
@@ -23,8 +21,7 @@ public class NoteCreateForm {
     }
 
     @Builder
-    public NoteCreateForm(Long memberId, MemoType memoType, String title, String description) {
-        this.memberId = memberId;
+    public NoteCreateForm(MemoType memoType, String title, String description) {
         this.memoType = memoType;
         this.title = title;
         this.description = description;

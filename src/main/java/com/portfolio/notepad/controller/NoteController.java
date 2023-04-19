@@ -28,14 +28,17 @@ public class NoteController {
      * @param form 노트객체
      */
     @PostMapping("/noteAdd")
-    public String noteAdd(@Valid @ModelAttribute("noteCreateForm") NoteCreateForm form, BindingResult bindingResult) {
+    public String noteAdd(@Valid @ModelAttribute("noteCreateForm") NoteCreateForm form,
+                          BindingResult bindingResult,
+                          @SessionAttribute("member") MemberSession memberSession) {
 
         if(bindingResult.hasErrors()){ // form 값 검증
             return "addNoteError";
         }
 
-        form.setMemberId(form.getMemberId()); // 바꺼보는걸로
-        noteService.addNote(form);
+        log.debug("form >> {}", form);
+
+        noteService.addNote(memberSession.getId(), form);
 
         return "redirect:notes";
     }

@@ -66,7 +66,7 @@ class NoteServiceTest {
     @Test
     void 메모추가_실패(){
         assertThatThrownBy(() -> {
-            noteService.addNote(new NoteCreateForm(100L, MemoType.BUSINESS, "타이틀", "내용"));
+            noteService.addNote(null, new NoteCreateForm(MemoType.BUSINESS, "타이틀", "내용"));
         }).isInstanceOf(MemberNotFount.class);
     }
 
@@ -110,6 +110,6 @@ class NoteServiceTest {
     }
 
     private Note saveNote(String title, String description, Member member, MemoType memoType) {
-        return noteService.addNote(new NoteCreateForm(member.getId(), memoType, title, description));
+        return noteService.addNote(member.getId(), new NoteCreateForm(memoType, title, description));
     }
 }

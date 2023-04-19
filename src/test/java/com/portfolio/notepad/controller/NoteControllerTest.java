@@ -59,10 +59,10 @@ public class NoteControllerTest {
     void create_note() throws Exception {
         // given
         Member member = getMember();
-        NoteCreateForm createForm = new NoteCreateForm(member.getId(), BUSINESS, "제목입니다", "내용입니다");
+        NoteCreateForm createForm = new NoteCreateForm(BUSINESS, "제목입니다", "내용입니다");
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("memberId", String.valueOf(createForm.getMemberId()));
+        params.add("memberId", String.valueOf(member.getId()));
         params.add("memoType", String.valueOf(createForm.getMemoType()));
         params.add("title", createForm.getTitle());
         params.add("description", createForm.getDescription());
@@ -88,10 +88,10 @@ public class NoteControllerTest {
     void note_add_fail() throws Exception {
         //given
         Member member = getMember();
-        NoteCreateForm createForm = new NoteCreateForm(member.getId(), BUSINESS, null, null);
+        NoteCreateForm createForm = new NoteCreateForm(BUSINESS, null, null);
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("memberId", String.valueOf(createForm.getMemberId()));
+        params.add("memberId", String.valueOf(member.getId()));
         params.add("memoType", String.valueOf(createForm.getMemoType()));
         params.add("title", createForm.getTitle());
         params.add("description", createForm.getDescription());

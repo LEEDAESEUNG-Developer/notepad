@@ -16,31 +16,31 @@ public interface NoteService {
      * @return
      */
     @Transactional
-    public Note addNote(NoteCreateForm form);
+    Note addNote(Long memberId, NoteCreateForm form);
 
     /**
      * 메모 하나 가지고 오기
      * @return
      */
-    public Note getNote(Long noteId);
+    Note getNote(Long noteId);
 
     /**
      * 회원 아이디로 노트를 가지고 온다.
      * @param memberId 객체에 회원 아이디
      * @return 회원 아이디에 메모를 모두 가지고온다.
      */
-    public List<Note> getNotes(Long memberId);
+    List<Note> getNotes(Long memberId);
 
     /**
      * 메모를 수정함
      */
     @Transactional
-    public void editNote(Long noteId, NoteUpdateForm form);
+    void editNote(Long noteId, NoteUpdateForm form);
 
     /**
      * 메모 삭제
      */
     @Transactional
-    public void deleteNote(Long noteId);
+    void deleteNote(Long noteId);
 
 }
