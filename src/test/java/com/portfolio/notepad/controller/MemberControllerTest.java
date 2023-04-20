@@ -24,6 +24,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 class MemberControllerTest {
 
+    public static final String LOGIN_ID = "test";
+    public static final String PASSWORD = "1234";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,8 +39,8 @@ class MemberControllerTest {
     }
 
     @BeforeEach
-    void beforeEach() {
-        Member member = new Member("test", "1234");
+    void beforeEach(){
+        Member member = new Member(LOGIN_ID, PASSWORD);
         memberJpaRepository.save(member);
     }
 
@@ -55,13 +58,9 @@ class MemberControllerTest {
     @DisplayName("로그인 하였을때 세션을 등록하고 /notes 페이지 이동해야된다")
     void login_success() throws Exception {
         // given
-        Member findMember = memberJpaRepository.findByLoginIdAndPwd("test", "1234")
-                .orElseThrow(MemberNotFount::new);
+        Member findMember = getMember();
 
-        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        param.add("userId", findMember.getLoginId());
-        param.add("password", findMember.getPwd());
-        param.add("idSave", "true");
+        MultiValueMap<String, String> param = createParam(findMember);
 
         //expected
         mockMvc.perform(post("/member/login")
@@ -76,13 +75,9 @@ class MemberControllerTest {
     @DisplayName("로그인을 할 때 아이디 저장이 되어어야함")
     void login_cookie_O() throws Exception {
         // given
-        Member findMember = memberJpaRepository.findByLoginIdAndPwd("test", "1234")
-                .orElseThrow(MemberNotFount::new);
+        Member findMember = getMember();
 
-        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        param.add("userId", findMember.getLoginId());
-        param.add("password", findMember.getPwd());
-        param.add("idSave", "true");
+        MultiValueMap<String, String> param = createParam(findMember);
 
         //expected
         mockMvc.perform(post("/member/login")
@@ -90,7 +85,7 @@ class MemberControllerTest {
                         .params(param))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/notes"))
-                .andExpect(MockMvcResultMatchers.cookie().value("id", "test"))
+                .andExpect(MockMvcResultMatchers.cookie().value("id", LOGIN_ID))
                 .andExpect(MockMvcResultMatchers.cookie().value("idSave", "true"))
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -104,5 +99,19 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("form", "userId", "password"))
                 .andDo(MockMvcResultHandlers.print());
+    }
+
+    private Member getMember() {
+        Member findMember = memberJpaRepository.findByLoginIdAndPwd(LOGIN_ID, PASSWORD)
+                .orElseThrow(MemberNotFount::new);
+        return findMember;
+    }
+
+    private MultiValueMap<String, String> createParam(Member findMember) {
+        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        param.add("userId", findMember.getLoginId());
+        param.add("password", findMember.getPwd());
+        param.add("idSave", "true");
+        return param;
     }
 }

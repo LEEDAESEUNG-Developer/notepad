@@ -29,8 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class NoteControllerTest {
+class NoteControllerTest {
 
+    public static final String LOGIN_ID = "test";
+    public static final String PASSWORD = "1234";
     @Autowired
     private MockMvc mockMvc;
 
@@ -47,7 +49,7 @@ public class NoteControllerTest {
         memberJpaRepository.deleteAll();
         noteJpaRepository.deleteAll();
 
-        Member member = new Member("test", "1234");
+        Member member = new Member(LOGIN_ID, PASSWORD);
         memberJpaRepository.save(member);
 
         session.setAttribute("member", new MemberSession(member));
@@ -61,11 +63,7 @@ public class NoteControllerTest {
         Member member = getMember();
         NoteCreateForm createForm = new NoteCreateForm(BUSINESS, "제목입니다", "내용입니다");
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("memberId", String.valueOf(member.getId()));
-        params.add("memoType", String.valueOf(createForm.getMemoType()));
-        params.add("title", createForm.getTitle());
-        params.add("description", createForm.getDescription());
+        MultiValueMap<String, String> params = createParams(member, createForm);
 
         // then
         mockMvc.perform(post("/noteAdd")
@@ -90,11 +88,7 @@ public class NoteControllerTest {
         Member member = getMember();
         NoteCreateForm createForm = new NoteCreateForm(BUSINESS, null, null);
 
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("memberId", String.valueOf(member.getId()));
-        params.add("memoType", String.valueOf(createForm.getMemoType()));
-        params.add("title", createForm.getTitle());
-        params.add("description", createForm.getDescription());
+        MultiValueMap<String, String> params = createParams(member, createForm);
 
         //expected
         mockMvc.perform(post("/noteAdd")
@@ -107,8 +101,17 @@ public class NoteControllerTest {
 
     }
 
+    private MultiValueMap<String, String> createParams(Member member, NoteCreateForm createForm) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("memberId", String.valueOf(member.getId()));
+        params.add("memoType", String.valueOf(createForm.getMemoType()));
+        params.add("title", createForm.getTitle());
+        params.add("description", createForm.getDescription());
+        return params;
+    }
+
     private Member getMember() {
-        return memberJpaRepository.findByLoginId("test").orElseThrow(MemberNotFount::new);
+        return memberJpaRepository.findByLoginId(LOGIN_ID).orElseThrow(MemberNotFount::new);
     }
 
 

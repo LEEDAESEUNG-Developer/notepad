@@ -22,6 +22,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Transactional
 class MemberServiceImplTest {
 
+    private static final String MEMBER_ID = "memberA";
+    private static final String PASSWORD = "1234";
+
     @Autowired
     private MemberService memberService;
     @Autowired
@@ -29,21 +32,18 @@ class MemberServiceImplTest {
 
     @BeforeEach
     void beforeEach(){
-        memberJpaRepository.deleteAll();
+        memberJpaRepository.deleteAll(); //PostConstruct가 회원 만들어줘서 테스트가 제대로 되지 않기에 삭제함
     }
 
     @Test
     @DisplayName("회원가입이 되어야한다")
     void 회원가입_성공(){
         //given
-        String memberLoginId = "memberA";
-        String memberPwd = "1234";
-
-        MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
+        MemberCreateForm createForm = new MemberCreateForm(MEMBER_ID, PASSWORD);
 
         // when
         Member registerMember = saveMember(createForm);
-        Member findMember = memberJpaRepository.findByLoginIdAndPwd(memberLoginId, memberPwd)
+        Member findMember = memberJpaRepository.findByLoginIdAndPwd(MEMBER_ID, PASSWORD)
                 .orElseThrow(MemberNotFount::new);
 
         //then
@@ -58,10 +58,7 @@ class MemberServiceImplTest {
     @DisplayName("중복회원인 경우는 에러가 발생해야한다")
     void 회원가입_실패(){
         //given
-        String memberLoginId = "memberA";
-        String memberPwd = "1234";
-
-        MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
+        MemberCreateForm createForm = new MemberCreateForm(MEMBER_ID, PASSWORD);
 
         //then
         assertThatThrownBy(() -> {
@@ -74,10 +71,10 @@ class MemberServiceImplTest {
     @DisplayName("DB에 있는 사용자라면 로그인이 되어야함")
     void 로그인_성공(){
         //given
-        Member member = memberJpaRepository.save(new Member("member", "1234"));
+        Member member = memberJpaRepository.save(new Member(MEMBER_ID, PASSWORD));
 
         // when
-        Member findMember = memberService.login("member", "1234");
+        Member findMember = memberService.login(MEMBER_ID, PASSWORD);
 
         //then
         assertThat(member).isEqualTo(findMember);
@@ -87,7 +84,7 @@ class MemberServiceImplTest {
     @DisplayName("DB에 없는 사용자라면 로그인이 실패되어야함")
     void 로그인_실패() {
         assertThatThrownBy(() -> {
-            memberService.login("member", "1234");
+            memberService.login(MEMBER_ID, PASSWORD);
         }).isInstanceOf(IllegalStateException.class);
     }
 
@@ -120,16 +117,14 @@ class MemberServiceImplTest {
     @DisplayName("아이디 찾기를 통해서 비밀번호 변경이 되어야함")
     void 비밀번호_변경_성공(){
         //given
-        String memberLoginId = "memberA";
-        String memberPwd = "1234";
         String changePwd = "1111";
 
         // when
-        MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
+        MemberCreateForm createForm = new MemberCreateForm(MEMBER_ID, PASSWORD);
         Member saveMember = saveMember(createForm);
 
         memberService.changeMemberPwd(new MemberPwdChangeForm(saveMember.getId(), changePwd));
-        Member findMember = memberService.login(memberLoginId, changePwd);
+        Member findMember = memberService.login(MEMBER_ID, changePwd);
 
         //then
         assertThat(saveMember.getLoginId()).isEqualTo(findMember.getLoginId());
@@ -139,12 +134,8 @@ class MemberServiceImplTest {
     @Test
     @DisplayName("회원이 삭제가 되어야함")
     void 회원삭제(){
-        //given
-        String memberLoginId = "memberA";
-        String memberPwd = "1234";
-
         // when
-        MemberCreateForm createForm = new MemberCreateForm(memberLoginId, memberPwd);
+        MemberCreateForm createForm = new MemberCreateForm(MEMBER_ID, PASSWORD);
         Member saveMember = saveMember(createForm);
 
         //then
