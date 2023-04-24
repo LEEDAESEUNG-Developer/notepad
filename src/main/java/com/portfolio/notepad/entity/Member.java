@@ -4,7 +4,6 @@ import com.portfolio.notepad.controller.request.member.MemberCreateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString(of = {"id", "loginId", "pwd"})
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue

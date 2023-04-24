@@ -4,7 +4,6 @@ import com.portfolio.notepad.controller.request.note.NoteUpdateForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 

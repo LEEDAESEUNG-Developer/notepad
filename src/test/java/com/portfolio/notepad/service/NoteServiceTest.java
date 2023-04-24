@@ -15,6 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
+@Transactional
 class NoteServiceTest {
 
     private static final String LOGIN_ID = "memberA";
@@ -89,12 +91,12 @@ class NoteServiceTest {
         Note saveNote = saveNote(title, description, findMember, MemoType.BUSINESS);
 
         // when
-        saveNote.updateNote(new NoteUpdateForm(saveNote.getMemoType(), editTitle, saveNote.getDescription()));
+        noteService.editNote(saveNote.getId(), new NoteUpdateForm(saveNote.getMemoType(), editTitle, saveNote.getDescription()));
+
+        System.out.println("saveNote = " + saveNote);
 
         //then
-        Note findNote = noteJpaRepository.findById(saveNote.getId())
-                .orElseThrow(NoteNotFound::new);
-        assertThat(findNote.getTitle()).isEqualTo(editTitle);
+        assertThat(saveNote.getTitle()).isEqualTo(editTitle);
     }
 
     @DisplayName("없는 메모를 수정하게 될 경우 예외처리가 되어야함")
