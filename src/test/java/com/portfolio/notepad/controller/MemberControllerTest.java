@@ -49,8 +49,7 @@ class MemberControllerTest {
     void login_x_fail() throws Exception {
         // expected
         mockMvc.perform(get("/notes"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/"))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
     }
 

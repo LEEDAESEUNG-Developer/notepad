@@ -38,7 +38,6 @@ class NoteServiceTest {
 
     @BeforeEach
     void beforeEach(){
-        noteJpaRepository.deleteAll(); //PostConstruct가 note 만들어줘서 테스트가 제대로 되지 않기에 삭제함
         memberJpaRepository.save(new Member(LOGIN_ID, PASSWORD));
     }
 
@@ -83,19 +82,19 @@ class NoteServiceTest {
     @Test
     void 메모수정_성공(){
         //given
+        Member findMember = getMember(LOGIN_ID, PASSWORD);
         String title = "제목";
         String description = "내용";
         String editTitle = "제목수정";
-        Member findMember = getMember(LOGIN_ID, PASSWORD);
+        Note saveNote = saveNote(title, description, findMember, MemoType.BUSINESS);
 
         // when
-        Note saveNote = saveNote(title, description, findMember, MemoType.BUSINESS);
         saveNote.updateNote(new NoteUpdateForm(saveNote.getMemoType(), editTitle, saveNote.getDescription()));
 
-        List<Note> findNotes = noteService.getNotes(findMember.getId());
-
         //then
-        assertThat(findNotes.get(0).getTitle()).isEqualTo(editTitle);
+        Note findNote = noteJpaRepository.findById(saveNote.getId())
+                .orElseThrow(NoteNotFound::new);
+        assertThat(findNote.getTitle()).isEqualTo(editTitle);
     }
 
     @DisplayName("없는 메모를 수정하게 될 경우 예외처리가 되어야함")
@@ -112,7 +111,6 @@ class NoteServiceTest {
                     editContent));
 
         }).isInstanceOf(NoteNotFound.class);
-
     }
 
     private Member getMember(String memberId, String password){

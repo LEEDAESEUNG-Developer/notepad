@@ -6,11 +6,10 @@ import com.portfolio.notepad.entity.Note;
 import com.portfolio.notepad.repository.MemberJpaRepository;
 import com.portfolio.notepad.repository.NoteJpaRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class StartPostConstruct {
 
